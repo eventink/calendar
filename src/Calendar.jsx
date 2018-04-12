@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import KeyCode from 'rc-util/lib/KeyCode';
+import moment from 'moment';
 import DateTable from './date/DateTable';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarFooter from './calendar/CalendarFooter';
@@ -218,6 +219,7 @@ const Calendar = createReactClass({
       locale, prefixCls, disabledDate,
       dateInputPlaceholder, timePicker,
       disabledTime,
+      disableMonthsInPast,
     } = props;
     const { value, selectedValue, mode } = state;
     const showTimePicker = mode === 'time';
@@ -244,6 +246,9 @@ const Calendar = createReactClass({
 
       timePickerEle = React.cloneElement(timePicker, timePickerProps);
     }
+
+    const disablePreviousMonth = disableMonthsInPast && value.clone().startOf('month').valueOf() <= moment().startOf('month').valueOf();
+    const disablePreviousYear = disableMonthsInPast && value.clone().startOf('year').valueOf() <= moment().startOf('year').valueOf();
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
@@ -274,6 +279,8 @@ const Calendar = createReactClass({
             onPanelChange={this.onPanelChange}
             showTimePicker={showTimePicker}
             prefixCls={prefixCls}
+            disablePreviousMonth={disablePreviousMonth}
+            disablePreviousYear={disablePreviousYear}
           />
           {timePicker && showTimePicker ?
             (<div className={`${prefixCls}-time-picker`}>
