@@ -251,8 +251,15 @@ const Calendar = createReactClass({
       timePickerEle = React.cloneElement(timePicker, timePickerProps);
     }
 
-    const disablePreviousMonth = disableMonthsInPast && value.clone().startOf('month').valueOf() <= moment().startOf('month').valueOf();
-    const disablePreviousYear = disableMonthsInPast && value.clone().startOf('year').valueOf() <= moment().startOf('year').valueOf();
+    const disablePreviousMonth = (
+      disableMonthsInPast &&
+      value.clone().startOf('month').valueOf() <= moment().startOf('month').valueOf()
+    );
+
+    const disablePreviousYear = (
+      disableMonthsInPast &&
+      value.clone().startOf('year').valueOf() <= moment().startOf('year').valueOf()
+    );
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
