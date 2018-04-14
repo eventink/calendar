@@ -144,6 +144,10 @@ const CalendarHeader = createReactClass({
       disabledMonth,
       disablePreviousMonth,
       disablePreviousYear,
+      prevMonthIcon,
+      nextMonthIcon,
+      prevYearIcon,
+      nextYearIcon,
     } = props;
 
     let panel = null;
@@ -187,26 +191,34 @@ const CalendarHeader = createReactClass({
       <div style={{ position: 'relative' }}>
         {showIf(enablePrev && !showTimePicker,
           disablePreviousYear ? (
-            <span className={`${prefixCls}-prev-year-btn disabled`} />
+            <span className={`${prefixCls}-prev-year-btn disabled`}>
+              {prevYearIcon}
+            </span>
           ) : (
             <a
               className={`${prefixCls}-prev-year-btn`}
               role="button"
               onClick={this.previousYear}
               title={locale.previousYear}
-            />
+            >
+              {prevYearIcon}
+            </a>
           )
         )}
         {showIf(enablePrev && !showTimePicker,
           disablePreviousMonth ? (
-            <span className={`${prefixCls}-prev-month-btn disabled`} />
+            <span className={`${prefixCls}-prev-month-btn disabled`}>
+              {prevMonthIcon}
+            </span>
           ) : (
             <a
               className={`${prefixCls}-prev-month-btn`}
               role="button"
               onClick={this.previousMonth}
               title={locale.previousMonth}
-            />
+            >
+              {prevMonthIcon}
+            </a>
           )
         )}
         {this.monthYearElement(showTimePicker)}
@@ -215,13 +227,19 @@ const CalendarHeader = createReactClass({
             className={`${prefixCls}-next-month-btn`}
             onClick={this.nextMonth}
             title={locale.nextMonth}
-          />)}
+          >
+            {nextMonthIcon}
+          </a>
+        )}
         {showIf(enableNext && !showTimePicker,
           <a
             className={`${prefixCls}-next-year-btn`}
             onClick={this.nextYear}
             title={locale.nextYear}
-          />)}
+          >
+            {nextYearIcon}
+          </a>
+        )}
       </div>
       {panel}
     </div>);
