@@ -34,6 +34,12 @@ describe('Calendar', () => {
       expect(wrapper.find('.rc-calendar-prev-year-btn.disabled').length).toBe(1);
       expect(wrapper.find('.rc-calendar-prev-month-btn.disabled').length).toBe(1);
     });
+
+    it('render disableMonthsInPast false correctly', () => {
+      const wrapper = mount(<Calendar />);
+      expect(wrapper.find('.rc-calendar-prev-year-btn.disabled').length).toBe(0);
+      expect(wrapper.find('.rc-calendar-prev-month-btn.disabled').length).toBe(0);
+    });
   });
 
   describe('timePicker', () => {
