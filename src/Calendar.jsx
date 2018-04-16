@@ -75,6 +75,7 @@ const Calendar = createReactClass({
     disabledTime: PropTypes.any,
     renderFooter: PropTypes.func,
     renderSidebar: PropTypes.func,
+    disableMonthsInPast: PropTypes.bool,
   },
 
   mixins: [CommonMixin, CalendarMixin],
