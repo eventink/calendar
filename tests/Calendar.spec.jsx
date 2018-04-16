@@ -28,6 +28,12 @@ describe('Calendar', () => {
       const wrapper = mount(<Calendar showToday={false}/>);
       expect(wrapper.find('.rc-calendar-today-btn').length).toBe(0);
     });
+
+    it('render disableMonthsInPast true correctly', () => {
+      const wrapper = mount(<Calendar disableMonthsInPast />);
+      expect(wrapper.find('.rc-calendar-prev-year-btn.disabled').length).toBe(1);
+      expect(wrapper.find('.rc-calendar-prev-month-btn.disabled').length).toBe(1);
+    });
   });
 
   describe('timePicker', () => {
