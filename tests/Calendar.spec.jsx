@@ -29,17 +29,19 @@ describe('Calendar', () => {
       expect(wrapper.find('.rc-calendar-today-btn').length).toBe(0);
     });
 
-    it('render disableMonthsInPast true correctly', () => {
-      const wrapper = mount(<Calendar disableMonthsInPast />);
-      expect(wrapper.find('.rc-calendar-prev-year-btn.disabled').length).toBe(1);
-      expect(wrapper.find('.rc-calendar-prev-month-btn.disabled').length).toBe(1);
-    });
+    describe('disableMonthsInPast', () => {
+      it('render disableMonthsInPast true correctly', () => {
+        const wrapper = mount(<Calendar disableMonthsInPast />);
+        expect(wrapper.find('.rc-calendar-prev-year-btn.disabled')).toHaveLength(1);
+        expect(wrapper.find('.rc-calendar-prev-month-btn.disabled')).toHaveLength(1);
+      });
 
-    it('render disableMonthsInPast false correctly', () => {
-      const wrapper = mount(<Calendar />);
-      expect(wrapper.find('.rc-calendar-prev-year-btn.disabled').length).toBe(0);
-      expect(wrapper.find('.rc-calendar-prev-month-btn.disabled').length).toBe(0);
-    });
+      it('render disableMonthsInPast false correctly', () => {
+        const wrapper = mount(<Calendar />);
+        expect(wrapper.find('.rc-calendar-prev-year-btn.disabled')).toHaveLength(0);
+        expect(wrapper.find('.rc-calendar-prev-month-btn.disabled')).toHaveLength(0);
+      });
+    })
   });
 
   describe('timePicker', () => {
