@@ -33,6 +33,12 @@ const CalendarHeader = createReactClass({
     enablePrev: PropTypes.any,
     enableNext: PropTypes.any,
     disabledMonth: PropTypes.func,
+    disablePreviousMonth: PropTypes.bool,
+    disablePreviousYear: PropTypes.bool,
+    prevMonthIcon: PropTypes.node,
+    nextMonthIcon: PropTypes.node,
+    prevYearIcon: PropTypes.node,
+    nextYearIcon: PropTypes.node,
   },
 
   getDefaultProps() {
