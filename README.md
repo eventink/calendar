@@ -254,6 +254,30 @@ http://react-component.github.io/calendar/examples/index.html
           <td>false</td>
           <td>whether to disable the year and month arrows on the left that link to dates in the past</td>
         </tr>
+        <tr>
+          <td>prevMonthIcon</td>
+          <td>React.Node</td>
+          <td></td>
+          <td>to use an own arrow icon</td>
+        </tr>
+        <tr>
+          <td>nextMonthIcon</td>
+          <td>React.Node</td>
+          <td></td>
+          <td>to use an own arrow icon</td>
+        </tr>
+        <tr>
+          <td>prevYearIcon</td>
+          <td>React.Node</td>
+          <td></td>
+          <td>to use an own arrow icon</td>
+        </tr>
+        <tr>
+          <td>nextYearIcon</td>
+          <td>React.Node</td>
+          <td></td>
+          <td>to use an own arrow icon</td>
+        </tr>
     </tbody>
 </table>
 
