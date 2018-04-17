@@ -41,7 +41,7 @@ describe('Calendar', () => {
         expect(wrapper.find('.rc-calendar-prev-year-btn.disabled')).toHaveLength(0);
         expect(wrapper.find('.rc-calendar-prev-month-btn.disabled')).toHaveLength(0);
       });
-    })
+    });
   });
 
   describe('timePicker', () => {
