@@ -42,6 +42,19 @@ describe('Calendar', () => {
         expect(wrapper.find('.rc-calendar-prev-month-btn.disabled')).toHaveLength(0);
       });
     });
+
+    it('render correctly with own icons', () => {
+      const testIcon = <span className="test-icon" />;
+      const wrapper = mount(
+        <Calendar
+          prevMonthIcon={testIcon}
+          nextMonthIcon={testIcon}
+          prevYearIcon={testIcon}
+          nextYearIcon={testIcon}
+        />
+      );
+      expect(wrapper.find('.test-icon').length).toBe(4);
+    });
   });
 
   describe('timePicker', () => {
