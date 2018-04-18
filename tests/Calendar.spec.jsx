@@ -64,6 +64,16 @@ describe('Calendar', () => {
       );
       expect(wrapper.find('.test-icon').length).toBe(4);
     });
+
+    it('render highlightToday true correctly', () => {
+      const wrapper = mount(<Calendar highlightToday />);
+      expect(wrapper.find('.rc-calendar-today')).toHaveLength(1);
+    });
+
+    it('render highlightToday false correctly', () => {
+      const wrapper = mount(<Calendar highlightToday={false} />);
+      expect(wrapper.find('.rc-calendar-today')).toHaveLength(0);
+    });
   });
 
   describe('timePicker', () => {
