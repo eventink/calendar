@@ -80,6 +80,7 @@ const Calendar = createReactClass({
     nextMonthIcon: PropTypes.node,
     prevYearIcon: PropTypes.node,
     nextYearIcon: PropTypes.node,
+    highlightToday: PropTypes.bool,
   },
 
   mixins: [CommonMixin, CalendarMixin],
@@ -91,6 +92,7 @@ const Calendar = createReactClass({
       timePicker: null,
       onOk: noop,
       onPanelChange: noop,
+      highlightToday: true,
     };
   },
   getInitialState() {
@@ -319,6 +321,7 @@ const Calendar = createReactClass({
               onSelect={this.onDateTableSelect}
               disabledDate={disabledDate}
               showWeekNumber={props.showWeekNumber}
+              highlightToday={props.highlightToday}
             />
           </div>
 
