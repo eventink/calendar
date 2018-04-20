@@ -71,6 +71,7 @@ const DateTBody = createReactClass({
     const inRangeClass = `${prefixCls}-in-range-cell`;
     const lastMonthDayClass = `${prefixCls}-last-month-cell`;
     const nextMonthDayClass = `${prefixCls}-next-month-btn-day`;
+    const nextMonthRowClass = `${prefixCls}-next-month-row`;
     const disabledClass = `${prefixCls}-disabled-cell`;
     const firstDisableClass = `${prefixCls}-disabled-cell-first-of-row`;
     const lastDisableClass = `${prefixCls}-disabled-cell-last-of-row`;
@@ -100,6 +101,7 @@ const DateTBody = createReactClass({
       let isCurrentWeek;
       let weekNumberCell;
       let isActiveWeek = false;
+      let isNextMonthRow = true;
       const dateCells = [];
       if (showWeekNumber) {
         weekNumberCell = (
@@ -172,8 +174,11 @@ const DateTBody = createReactClass({
         if (isBeforeCurrentMonthYear) {
           cls += ` ${lastMonthDayClass}`;
         }
+
         if (isAfterCurrentMonthYear) {
           cls += ` ${nextMonthDayClass}`;
+        } else {
+          isNextMonthRow = false;
         }
 
         if (disabledDate) {
@@ -237,6 +242,7 @@ const DateTBody = createReactClass({
           className={cx({
             [`${prefixCls}-current-week`]: isCurrentWeek,
             [`${prefixCls}-active-week`]: isActiveWeek,
+            [nextMonthRowClass]: isNextMonthRow,
           })}
         >
           {weekNumberCell}
