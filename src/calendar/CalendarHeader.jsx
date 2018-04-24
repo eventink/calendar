@@ -88,6 +88,7 @@ const CalendarHeader = createReactClass({
     if (onMonthSelect) {
       return (
         <a
+          className={`${prefixCls}-month-select`}
           onClick={() => {
             onMonthSelect(displayedValue);
           }}
