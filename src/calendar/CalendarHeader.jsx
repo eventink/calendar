@@ -83,15 +83,18 @@ const CalendarHeader = createReactClass({
     const localeData = displayedValue.localeData();
     const monthBeforeYear = locale.monthBeforeYear;
     const selectClassName = `${prefixCls}-${monthBeforeYear ? 'my-select' : 'ym-select'}`;
-    const onMonthSelect = props.onMonthSelect;
 
-    if (onMonthSelect) {
+    if (props.onMonthSelect) {
       return (
         <a
           className={`${prefixCls}-month-select`}
           onClick={() => {
-            onMonthSelect(displayedValue);
+            props.onMonthSelect(displayedValue);
           }}
+          onMouseEnter={() => {
+            props.onMonthMouseEnter(displayedValue);
+          }}
+          onMouseLeave={props.onMonthMouseLeave}
         >
           {localeData.months(displayedValue)} {displayedValue.format(locale.yearFormat)}
         </a>

@@ -225,7 +225,12 @@ const Calendar = createReactClass({
 
     this.setState({ hoverValue: days });
   },
-  onWeekMouseLeave() {
+  onMonthMouseEnter(month) {
+    const days = this.getDaysOfMonth(month);
+
+    this.setState({ hoverValue: days });
+  },
+  onMouseLeave() {
     this.setState({ hoverValue: null });
   },
   onMonthSelect(month) {
@@ -368,6 +373,8 @@ const Calendar = createReactClass({
             prefixCls={prefixCls}
             multiple={multiple}
             onMonthSelect={this.props.selectMonths && this.onMonthSelect}
+            onMonthMouseEnter={this.props.selectMonths && this.onMonthMouseEnter}
+            onMonthMouseLeave={this.props.selectMonths && this.onMouseLeave}
           />
           {timePicker && showTimePicker ?
             (<div className={`${prefixCls}-time-picker`}>
@@ -391,7 +398,7 @@ const Calendar = createReactClass({
               multiple={multiple}
               onWeekSelect={this.props.selectWeeks && this.onWeekSelect}
               onWeekMouseEnter={this.props.selectWeeks && this.onWeekMouseEnter}
-              onWeekMouseLeave={this.props.selectWeeks && this.onWeekMouseLeave}
+              onWeekMouseLeave={this.props.selectWeeks && this.onMouseLeave}
             />
           </div>
 
