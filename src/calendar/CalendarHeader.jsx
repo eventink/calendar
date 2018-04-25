@@ -93,7 +93,7 @@ const CalendarHeader = createReactClass({
             onMonthSelect(displayedValue);
           }}
         >
-          {localeData.monthsShort(displayedValue)} {displayedValue.format(locale.yearFormat)}
+          {localeData.months(displayedValue)} {displayedValue.format(locale.yearFormat)}
         </a>
       );
     }
