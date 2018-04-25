@@ -228,6 +228,19 @@ const Calendar = createReactClass({
 
     this.setSelectedValue(newValue.length ? newValue : null);
   },
+  onWeekMouseEnter({ month, weekday }) {
+    const days = this.getWeekdaysOfMonth({ month, weekday });
+
+    this.setState({ hoverValue: days });
+  },
+  onMonthMouseEnter(month) {
+    const days = this.getDaysOfMonth(month);
+
+    this.setState({ hoverValue: days });
+  },
+  onMouseLeave() {
+    this.setState({ hoverValue: null });
+  },
   onMonthSelect(month) {
     const days = this.getDaysOfMonth(month);
 
@@ -313,7 +326,7 @@ const Calendar = createReactClass({
       nextYearIcon,
       multiple,
     } = props;
-    const { value, selectedValue, displayedValue, mode } = state;
+    const { value, selectedValue, displayedValue, hoverValue, mode } = state;
     const showTimePicker = mode === 'time';
     const disabledTimeConfig = showTimePicker && disabledTime && timePicker ?
       getTimeConfig(selectedValue, disabledTime) : null;
@@ -389,6 +402,8 @@ const Calendar = createReactClass({
             nextYearIcon={nextYearIcon}
             multiple={multiple}
             onMonthSelect={this.props.selectMonths && this.onMonthSelect}
+            onMonthMouseEnter={this.props.selectMonths && this.onMonthMouseEnter}
+            onMonthMouseLeave={this.props.selectMonths && this.onMouseLeave}
           />
           {timePicker && showTimePicker ?
             (<div className={`${prefixCls}-time-picker`}>
@@ -403,6 +418,7 @@ const Calendar = createReactClass({
               value={value}
               selectedValue={selectedValue}
               displayedValue={displayedValue}
+              hoverValue={hoverValue}
               prefixCls={prefixCls}
               dateRender={props.dateRender}
               onSelect={this.onDateTableSelect}
@@ -411,6 +427,8 @@ const Calendar = createReactClass({
               highlightToday={props.highlightToday}
               multiple={multiple}
               onWeekSelect={this.props.selectWeeks && this.onWeekSelect}
+              onWeekMouseEnter={this.props.selectWeeks && this.onWeekMouseEnter}
+              onWeekMouseLeave={this.props.selectWeeks && this.onMouseLeave}
             />
           </div>
 

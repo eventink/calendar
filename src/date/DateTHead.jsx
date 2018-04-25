@@ -51,6 +51,13 @@ class DateTHead extends React.Component {
                   weekday: (firstDayOfWeek + xindex) % DateConstants.DATE_COL_COUNT,
                 });
               }}
+              onMouseEnter={() => {
+                props.onWeekMouseEnter({
+                  month: displayedValue,
+                  weekday: (firstDayOfWeek + xindex) % DateConstants.DATE_COL_COUNT,
+                });
+              }}
+              onMouseLeave={props.onWeekMouseLeave}
             >
               {veryShortWeekdays[xindex]}
             </a>
