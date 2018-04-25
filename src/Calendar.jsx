@@ -18,11 +18,13 @@ function noop() {
 
 function goStartMonth() {
   const next = this.state.displayedValue.clone();
+  next.startOf('month');
   this.setDisplayedValue(next);
 }
 
 function goEndMonth() {
   const next = this.state.displayedValue.clone();
+  next.startOf('month');
   this.setDisplayedValue(next);
 }
 
@@ -113,7 +115,7 @@ const Calendar = createReactClass({
     // mac
     const ctrlKey = event.ctrlKey || event.metaKey;
     const { disabledDate } = this.props;
-    const { value } = this.state;
+    const { displayedValue } = this.state;
     switch (keyCode) {
       case KeyCode.DOWN:
         goWeek.call(this, 1);
@@ -156,8 +158,8 @@ const Calendar = createReactClass({
         event.preventDefault();
         return 1;
       case KeyCode.ENTER:
-        if (!disabledDate || !disabledDate(value)) {
-          this.onSelect(value, {
+        if (!disabledDate || !disabledDate(displayedValue)) {
+          this.onSelect(displayedValue, {
             source: 'keyboard',
           });
         }

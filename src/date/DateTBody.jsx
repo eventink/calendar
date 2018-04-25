@@ -185,14 +185,10 @@ const DateTBody = createReactClass({
               }
             }
           }
-        } else if (isSameDay(current, value)) {
+        } else if (isSameDay(current, displayedValue)) {
           // keyboard change value, highlight works
           selected = true;
           isActiveWeek = true;
-        }
-
-        if (isSameDay(current, displayedValue)) {
-          selected = true;
         }
 
         if (isSameDay(current, selectedValue)) {

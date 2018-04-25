@@ -216,7 +216,7 @@ describe('Calendar', () => {
         expected.add(-1, 'day');
 
         calendar.simulate('keyDown', { keyCode: keyCode.LEFT });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(calendar.state().displayedValue.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -226,7 +226,7 @@ describe('Calendar', () => {
         const expected = original.clone();
         expected.add(1, 'day');
         calendar.simulate('keyDown', { keyCode: keyCode.RIGHT });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(calendar.state().displayedValue.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -242,7 +242,7 @@ describe('Calendar', () => {
         expected.add(-1, 'day');
 
         calendar.simulate('keyDown', { keyCode: keyCode.LEFT });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(calendar.state().displayedValue.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -252,7 +252,7 @@ describe('Calendar', () => {
         const expected = original.clone();
         expected.add(1, 'day');
         calendar.simulate('keyDown', { keyCode: keyCode.RIGHT });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(calendar.state().displayedValue.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -261,7 +261,7 @@ describe('Calendar', () => {
         const expected = original.clone();
         expected.add(-7, 'day');
         calendar.simulate('keyDown', { keyCode: keyCode.UP });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(calendar.state().displayedValue.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -270,7 +270,7 @@ describe('Calendar', () => {
         const expected = original.clone();
         expected.add(7, 'day');
         calendar.simulate('keyDown', { keyCode: keyCode.DOWN });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(calendar.state().displayedValue.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -279,7 +279,7 @@ describe('Calendar', () => {
         const expected = original.clone();
         expected.add(1, 'month');
         calendar.simulate('keyDown', { keyCode: keyCode.PAGE_DOWN });
-        expect(calendar.state().value.month()).toBe(expected.month());
+        expect(calendar.state().displayedValue.month()).toBe(expected.month());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -288,7 +288,7 @@ describe('Calendar', () => {
         const expected = original.clone();
         expected.add(-1, 'month');
         calendar.simulate('keyDown', { keyCode: keyCode.PAGE_UP });
-        expect(calendar.state().value.month()).toBe(expected.month());
+        expect(calendar.state().displayedValue.month()).toBe(expected.month());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -300,7 +300,7 @@ describe('Calendar', () => {
           keyCode: keyCode.LEFT,
           ctrlKey: 1,
         });
-        expect(calendar.state().value.year()).toBe(expected.year());
+        expect(calendar.state().displayedValue.year()).toBe(expected.year());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -312,7 +312,7 @@ describe('Calendar', () => {
           keyCode: keyCode.RIGHT,
           ctrlKey: 1,
         });
-        expect(calendar.state().value.year()).toBe(expected.year());
+        expect(calendar.state().displayedValue.year()).toBe(expected.year());
         expect(input.getDOMNode().value).toBe('');
       });
 
@@ -324,7 +324,7 @@ describe('Calendar', () => {
         calendar.simulate('keyDown', {
           keyCode: keyCode.HOME,
         });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(calendar.state().displayedValue.date()).toBe(expected.date());
       });
 
       it('END works', () => {
@@ -383,43 +383,43 @@ describe('Calendar', () => {
     });
 
     it('next month works', () => {
-      let month = calendar.state().value.month();
+      let month = calendar.state().displayedValue.month();
       if (month === 11) {
         month = -1;
       }
 
       calendar.find('.rc-calendar-next-month-btn').hostNodes().at(0).simulate('click');
 
-      expect(calendar.state().value.month()).toBe(month + 1);
+      expect(calendar.state().displayedValue.month()).toBe(month + 1);
       expect(input.getDOMNode().value).toBe('');
     });
 
     it('previous month works', () => {
-      let month = calendar.state().value.month();
+      let month = calendar.state().displayedValue.month();
       if (month === 0) {
         month = 12;
       }
 
       calendar.find('.rc-calendar-prev-month-btn').hostNodes().at(0).simulate('click');
 
-      expect(calendar.state().value.month()).toBe(month - 1);
+      expect(calendar.state().displayedValue.month()).toBe(month - 1);
       expect(input.getDOMNode().value).toBe('');
     });
 
     it('next year works', () => {
-      const year = calendar.state().value.year();
+      const year = calendar.state().displayedValue.year();
 
       calendar.find('.rc-calendar-next-year-btn').hostNodes().at(0).simulate('click');
 
-      expect(calendar.state().value.year()).toBe(year + 1);
+      expect(calendar.state().displayedValue.year()).toBe(year + 1);
     });
 
     it('previous year works', () => {
-      const year = calendar.state().value.year();
+      const year = calendar.state().displayedValue.year();
 
       calendar.find('.rc-calendar-prev-year-btn').hostNodes().at(0).simulate('click');
 
-      expect(calendar.state().value.year()).toBe(year - 1);
+      expect(calendar.state().displayedValue.year()).toBe(year - 1);
     });
 
     it('onSelect works', () => {
@@ -451,7 +451,7 @@ describe('Calendar', () => {
       expect(calendar.find('.rc-calendar-month-panel').hostNodes().length).toBe(1);
       expect(calendar.find('.rc-calendar-month-panel-month').hostNodes().length).toBe(12);
       calendar.find('.rc-calendar-month-panel-month').hostNodes().at(9).simulate('click');
-      expect(calendar.state().value.month()).toBe(9);
+      expect(calendar.state().displayedValue.month()).toBe(9);
     });
 
     it('top year panel shows', () => {
@@ -463,7 +463,7 @@ describe('Calendar', () => {
       const year = calendar.find('.rc-calendar-year-panel-year').hostNodes().at(9);
       year.simulate('click');
       text = year.text();
-      expect(String(calendar.state().value.year())).toBe(text);
+      expect(String(calendar.state().displayedValue.year())).toBe(text);
     });
 
     it('year panel works', () => {
@@ -476,7 +476,7 @@ describe('Calendar', () => {
       year.simulate('click');
       text = year.text();
       calendar.find('.rc-calendar-month-panel-month').hostNodes().at(9).simulate('click');
-      expect(String(calendar.state().value.year())).toBe(text);
+      expect(String(calendar.state().displayedValue.year())).toBe(text);
       expect(input.getDOMNode().value).toBe('');
     });
 
