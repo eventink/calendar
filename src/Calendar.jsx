@@ -220,6 +220,14 @@ const Calendar = createReactClass({
 
     this.setSelectedValue(newValue.length ? newValue : null);
   },
+  onWeekMouseEnter({ month, weekday }) {
+    const days = this.getWeekdaysOfMonth({ month, weekday });
+
+    this.setState({ hoverValue: days });
+  },
+  onWeekMouseLeave() {
+    this.setState({ hoverValue: null });
+  },
   onMonthSelect(month) {
     const days = this.getDaysOfMonth(month);
 
@@ -300,7 +308,7 @@ const Calendar = createReactClass({
       disabledTime,
       multiple,
     } = props;
-    const { value, selectedValue, displayedValue, mode } = state;
+    const { value, selectedValue, displayedValue, hoverValue, mode } = state;
     const showTimePicker = mode === 'time';
     const disabledTimeConfig = showTimePicker && disabledTime && timePicker ?
       getTimeConfig(selectedValue, disabledTime) : null;
@@ -374,6 +382,7 @@ const Calendar = createReactClass({
               value={value}
               selectedValue={selectedValue}
               displayedValue={displayedValue}
+              hoverValue={hoverValue}
               prefixCls={prefixCls}
               dateRender={props.dateRender}
               onSelect={this.onDateTableSelect}
@@ -381,6 +390,8 @@ const Calendar = createReactClass({
               showWeekNumber={props.showWeekNumber}
               multiple={multiple}
               onWeekSelect={this.props.selectWeeks && this.onWeekSelect}
+              onWeekMouseEnter={this.props.selectWeeks && this.onWeekMouseEnter}
+              onWeekMouseLeave={this.props.selectWeeks && this.onWeekMouseLeave}
             />
           </div>
 

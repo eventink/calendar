@@ -70,6 +70,7 @@ const DateTBody = createReactClass({
     const selectedDateClass = `${prefixCls}-selected-date`;  // do not move with mouse operation
     const selectedStartDateClass = `${prefixCls}-selected-start-date`;
     const selectedEndDateClass = `${prefixCls}-selected-end-date`;
+    const hoveredDateClass = `${prefixCls}-hovered-date`;
     const inRangeClass = `${prefixCls}-in-range-cell`;
     const lastMonthDayClass = `${prefixCls}-last-month-cell`;
     const nextMonthDayClass = `${prefixCls}-next-month-btn-day`;
@@ -148,6 +149,13 @@ const DateTBody = createReactClass({
             // keyboard change value, highlight works
             selected = true;
             isActiveWeek = true;
+          }
+          if (hoverValue && hoverValue.length) {
+            hoverValue.forEach((singleValue) => {
+              if (isSameDay(current, singleValue)) {
+                cls += ` ${hoveredDateClass}`;
+              }
+            });
           }
         } else if (selectedValue && Array.isArray(selectedValue)) {
           const rangeValue = hoverValue.length ? hoverValue : selectedValue;
