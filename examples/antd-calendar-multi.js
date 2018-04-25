@@ -8,14 +8,12 @@ import Calendar from 'rc-calendar';
 import DatePicker from 'rc-calendar/src/Picker';
 import zhCN from 'rc-calendar/src/locale/zh_CN';
 import enUS from 'rc-calendar/src/locale/en_US';
-import 'rc-time-picker/assets/index.css';
-import TimePickerPanel from 'rc-time-picker/lib/Panel';
 
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import 'moment/locale/en-gb';
 
-const format = 'YYYY-MM-DD HH:mm:ss';
+const format = 'YYYY-MM-DD';
 const cn = location.search.indexOf('cn') !== -1;
 
 const now = moment();
@@ -25,32 +23,8 @@ if (cn) {
   now.locale('en-gb').utcOffset(0);
 }
 
-function getFormat(time) {
-  return time ? format : 'YYYY-MM-DD';
-}
-
-
 const defaultCalendarValue = now.clone();
 defaultCalendarValue.add(-1, 'month');
-
-const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
-
-function disabledTime(date) {
-  console.log('disabledTime', date);
-  if (date && (date.date() === 15)) {
-    return {
-      disabledHours() {
-        return [3, 4];
-      },
-    };
-  }
-  return {
-    disabledHours() {
-      return [1, 2];
-    },
-  };
-}
-
 
 function disabledDate(current) {
   if (!current) {
@@ -64,35 +38,48 @@ function disabledDate(current) {
   return current.valueOf() < date.valueOf();  // can not select days before today
 }
 
+function formatStr(value, strFormat) {
+  let str;
+
+  str = value && value.length && value.map((singleValue) => {
+    return singleValue.format(strFormat) || '';
+  }).join(', ') || '';
+
+  return str;
+}
+
 class Demo extends React.Component {
   static propTypes = {
-    defaultValue: PropTypes.object,
-    defaultCalendarValue: PropTypes.object,
+    defaultValue: PropTypes.array,
+    defaultCalendarValue: PropTypes.array,
   }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      showTime: true,
       showDateInput: true,
       disabled: false,
       value: props.defaultValue,
     };
+
+    this.nextDatePickerValue = null;
   }
 
   onChange = (value) => {
-    // console.log('DatePicker change: ', (value && value.format(format)));
-    console.log('DatePicker change: ', value);
-    this.setState({
-      value,
-    });
+    this.nextDatePickerValue = value;
   }
 
-  onShowTimeChange = (e) => {
-    this.setState({
-      showTime: e.target.checked,
-    });
+  onOpenChange = (status) => {
+    if (status === false) {
+      if (this.nextDatePickerValue) {
+        console.log('DatePicker change: ', formatStr(this.nextDatePickerValue, format));
+
+        this.setState({
+          value: this.nextDatePickerValue,
+        });
+      }
+    }
   }
 
   onShowDateInputChange = (e) => {
@@ -108,31 +95,22 @@ class Demo extends React.Component {
   }
 
   render() {
+    console.log('render');
     const state = this.state;
     const calendar = (<Calendar
       locale={cn ? zhCN : enUS}
       style={{ zIndex: 1000 }}
       dateInputPlaceholder="please input"
-      formatter={getFormat(state.showTime)}
-      disabledTime={state.showTime ? disabledTime : null}
-      timePicker={state.showTime ? timePickerElement : null}
-      defaultValue={this.props.defaultCalendarValue && [this.props.defaultCalendarValue]}
+      formatter={format}
+      defaultValue={this.props.defaultCalendarValue}
       showDateInput={state.showDateInput}
       disabledDate={disabledDate}
-      multiple={true}
-      selectWeeks={true}
+      multiple
+      selectWeeks
+      selectMonths
     />);
     return (<div style={{ width: 400, margin: 20 }}>
       <div style={{ marginBottom: 10 }}>
-        <label>
-          <input
-            type="checkbox"
-            checked={state.showTime}
-            onChange={this.onShowTimeChange}
-          />
-          showTime
-        </label>
-        &nbsp;&nbsp;&nbsp;&nbsp;
         <label>
           <input
             type="checkbox"
@@ -165,6 +143,7 @@ class Demo extends React.Component {
           calendar={calendar}
           value={state.value}
           onChange={this.onChange}
+          onOpenChange={this.onOpenChange}
         >
           {
             ({ value }) => {
@@ -177,7 +156,7 @@ class Demo extends React.Component {
                   readOnly
                   tabIndex="-1"
                   className="ant-calendar-picker-input ant-input"
-                  // value={value && value.format(getFormat(state.showTime)) || ''}
+                  value={formatStr(value, format)}
                 />
                 </span>
               );
@@ -191,12 +170,12 @@ class Demo extends React.Component {
 
 function onStandaloneSelect(value) {
   console.log('onStandaloneSelect', value);
-  // console.log(value && value.format(format));
+  console.log(formatStr(value, format));
 }
 
 function onStandaloneChange(value) {
   console.log('onStandaloneChange', value);
-  // console.log(value && value.format(format));
+  console.log(formatStr(value, format));
 }
 
 
@@ -214,24 +193,22 @@ ReactDOM.render((<div
         showWeekNumber={false}
         locale={cn ? zhCN : enUS}
         defaultValue={[now]}
-        disabledTime={disabledTime}
         showToday
-        formatter={getFormat(true)}
+        formatter={format}
         showOk={false}
-        timePicker={timePickerElement}
         onChange={onStandaloneChange}
         disabledDate={disabledDate}
         onSelect={onStandaloneSelect}
-        multiple={true}
-        selectWeeks={true}
-        selectMonths={true}
+        multiple
+        selectWeeks
+        selectMonths
       />
     </div>
     <div style={{ float: 'left', width: 300 }}>
       <Demo defaultValue={[now]} />
     </div>
     <div style={{ float: 'right', width: 300 }}>
-      <Demo defaultCalendarValue={defaultCalendarValue} />
+      <Demo defaultCalendarValue={[defaultCalendarValue]} />
     </div>
     <div style={{ clear: 'both' }}></div>
   </div>
