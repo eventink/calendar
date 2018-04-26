@@ -278,7 +278,10 @@ const Calendar = createReactClass({
     const day = firstDayOfMonth;
 
     while (day.isBefore(lastDayOfMonth)) {
-      selectedDates.push(day.clone());
+      if (!this.props.disabledDate(day)) {
+        selectedDates.push(day.clone());
+      }
+
       day.add(1, 'day');
     }
 
