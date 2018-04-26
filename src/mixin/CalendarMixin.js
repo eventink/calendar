@@ -142,6 +142,13 @@ const CalendarMixin = {
     });
   },
 
+  sortValues(values) {
+    if (values && values.length) {
+      return values.sort((a, b) => a - b);
+    }
+    return null;
+  },
+
   updateMultiSelectValue(value) {
     const originalValue = this.state.selectedValue || [];
     let newValue = originalValue.slice(0);
@@ -159,12 +166,7 @@ const CalendarMixin = {
       newValue.push(value);
     }
 
-    if (!newValue.length) {
-      newValue = null;
-    } else {
-      newValue.sort((a, b) => a - b);
-    }
-
+    newValue = this.sortValues(newValue);
     this.props.onChange(newValue);
     return newValue;
   },
@@ -192,6 +194,7 @@ const CalendarMixin = {
       });
     }
 
+    newValue = this.sortValues(newValue);
     this.props.onChange(newValue);
     return newValue;
   },
