@@ -3350,7 +3350,7 @@ exports[`Calendar render render correctly 2`] = `
               </td>
             </tr>
             <tr
-              class=""
+              class="rc-calendar-next-month-row"
               role="row"
             >
               <td
