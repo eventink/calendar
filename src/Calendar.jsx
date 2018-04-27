@@ -213,7 +213,7 @@ const Calendar = createReactClass({
     }
     props.onPanelChange(value || state.value, mode);
   },
-  onWeekSelect({ month, weekday }) {
+  onWeekDaysSelect({ month, weekday }) {
     const days = this.getWeekdaysOfMonth({ month, weekday });
 
     if (!days.length) return;
@@ -230,7 +230,7 @@ const Calendar = createReactClass({
 
     this.setSelectedValue(newValue);
   },
-  onWeekMouseEnter({ month, weekday }) {
+  onWeekDaysMouseEnter({ month, weekday }) {
     const days = this.getWeekdaysOfMonth({ month, weekday });
 
     this.setState({ hoverValue: days });
@@ -431,9 +431,9 @@ const Calendar = createReactClass({
               showWeekNumber={props.showWeekNumber}
               highlightToday={props.highlightToday}
               multiple={multiple}
-              onWeekSelect={this.props.selectWeeks && this.onWeekSelect}
-              onWeekMouseEnter={this.props.selectWeeks && this.onWeekMouseEnter}
-              onWeekMouseLeave={this.props.selectWeeks && this.onMouseLeave}
+              onWeekDaysSelect={this.props.selectWeekDays && this.onWeekDaysSelect}
+              onWeekDaysMouseEnter={this.props.selectWeekDays && this.onWeekDaysMouseEnter}
+              onWeekDaysMouseLeave={this.props.selectWeekDays && this.onMouseLeave}
             />
           </div>
 

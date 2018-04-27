@@ -42,22 +42,22 @@ class DateTHead extends React.Component {
           title={day}
           className={`${prefixCls}-column-header`}
         >
-          {props.onWeekSelect ? (
+          {props.onWeekDaysSelect ? (
             <a
               className={`${prefixCls}-column-header-inner`}
               onClick={() => {
-                props.onWeekSelect({
+                props.onWeekDaysSelect({
                   month: displayedValue,
                   weekday: (firstDayOfWeek + xindex) % DateConstants.DATE_COL_COUNT,
                 });
               }}
               onMouseEnter={() => {
-                props.onWeekMouseEnter({
+                props.onWeekDaysMouseEnter({
                   month: displayedValue,
                   weekday: (firstDayOfWeek + xindex) % DateConstants.DATE_COL_COUNT,
                 });
               }}
-              onMouseLeave={props.onWeekMouseLeave}
+              onMouseLeave={props.onWeekDaysMouseLeave}
             >
               {veryShortWeekdays[xindex]}
             </a>
