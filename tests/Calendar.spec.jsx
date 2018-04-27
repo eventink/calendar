@@ -28,6 +28,34 @@ describe('Calendar', () => {
       const wrapper = mount(<Calendar showToday={false}/>);
       expect(wrapper.find('.rc-calendar-today-btn').length).toBe(0);
     });
+
+    it('render correctly with multiple selected dates for selectedValue', () => {
+      const enWrapper = render(
+        <Calendar
+          multiple
+          locale={enUS}
+          selectedValue={[
+            moment('2017-03-29').locale('en'),
+            moment('2017-03-30').locale('en'),
+          ]}
+        />
+      );
+      expect(enWrapper).toMatchSnapshot();
+    });
+
+    it('render correctly with multiple selected dates for defaultSelectedValue', () => {
+      const enWrapper = render(
+        <Calendar
+          multiple
+          locale={enUS}
+          defaultSelectedValue={[
+            moment('2017-03-29').locale('en'),
+            moment('2017-03-30').locale('en'),
+          ]}
+        />
+      );
+      expect(enWrapper).toMatchSnapshot();
+    });
   });
 
   describe('timePicker', () => {
@@ -453,6 +481,57 @@ describe('Calendar', () => {
     });
   });
 
+  describe('date ranges', () => {
+    it('selecting all sundays works', () => {
+      const onSelect = jest.fn();
+
+      const calendar = mount(
+        <Calendar
+          format={format}
+          onSelect={onSelect}
+          disabledDate={() => false}
+          multiple
+          selectWeeks
+        />
+      );
+
+      calendar.find('.rc-calendar-column-header-inner').first().hostNodes().simulate('click');
+
+      expect(calendar).toMatchSnapshot();
+
+      expect(onSelect.mock.calls[0][0].map((date) => date.format(format))).toEqual([
+        '2017-03-05',
+        '2017-03-12',
+        '2017-03-19',
+        '2017-03-26',
+      ]);
+    });
+
+    it('selecting the entire month works', () => {
+      const onSelect = jest.fn();
+
+      const calendar = mount(
+        <Calendar
+          format={format}
+          onSelect={onSelect}
+          disabledDate={() => false}
+          multiple
+          selectMonths
+        />
+      );
+
+      calendar.find('.rc-calendar-month-select').first().hostNodes().simulate('click');
+
+      expect(calendar).toMatchSnapshot();
+
+      const expected = [];
+      for (let i = 1; i <= 31; i++) {
+        expected.push(`2017-03-${i < 10 ? '0' : ''}${i}`);
+      }
+
+      expect(onSelect.mock.calls[0][0].map((date) => date.format(format))).toEqual(expected);
+    });
+  });
 
   describe('input', () => {
     it('change will fire onSelect/onChange', () => {
