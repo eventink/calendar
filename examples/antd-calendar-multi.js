@@ -71,7 +71,7 @@ ReactDOM.render((<div
         disabledDate={disabledDate}
         onSelect={onStandaloneSelect}
         multiple
-        selectWeeks
+        selectWeekDays
         selectMonths
       />
     </div>

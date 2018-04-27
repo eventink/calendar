@@ -491,7 +491,7 @@ describe('Calendar', () => {
           onSelect={onSelect}
           disabledDate={() => false}
           multiple
-          selectWeeks
+          selectWeekDays
         />
       );
 

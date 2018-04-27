@@ -1984,7 +1984,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
   prefixCls="rc-calendar"
   renderFooter={[Function]}
   renderSidebar={[Function]}
-  selectWeeks={true}
+  selectWeekDays={true}
   showDateInput={true}
   showToday={true}
   style={Object {}}
@@ -2216,9 +2216,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
             }
             multiple={true}
             onSelect={[Function]}
-            onWeekMouseEnter={[Function]}
-            onWeekMouseLeave={[Function]}
-            onWeekSelect={[Function]}
+            onWeekDaysMouseEnter={[Function]}
+            onWeekDaysMouseLeave={[Function]}
+            onWeekDaysSelect={[Function]}
             prefixCls="rc-calendar"
             selectedValue={
               Array [
@@ -2273,9 +2273,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                 }
                 multiple={true}
                 onSelect={[Function]}
-                onWeekMouseEnter={[Function]}
-                onWeekMouseLeave={[Function]}
-                onWeekSelect={[Function]}
+                onWeekDaysMouseEnter={[Function]}
+                onWeekDaysMouseLeave={[Function]}
+                onWeekDaysSelect={[Function]}
                 prefixCls="rc-calendar"
                 selectedValue={
                   Array [
@@ -2438,9 +2438,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                 }
                 multiple={true}
                 onSelect={[Function]}
-                onWeekMouseEnter={[Function]}
-                onWeekMouseLeave={[Function]}
-                onWeekSelect={[Function]}
+                onWeekDaysMouseEnter={[Function]}
+                onWeekDaysMouseLeave={[Function]}
+                onWeekDaysSelect={[Function]}
                 prefixCls="rc-calendar"
                 selectedValue={
                   Array [
