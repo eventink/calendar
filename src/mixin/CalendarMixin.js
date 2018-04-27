@@ -142,6 +142,12 @@ const CalendarMixin = {
     });
   },
 
+  sortValues(values) {
+    if (values && values.length) {
+      values.sort((a, b) => a - b);
+    }
+  },
+
   updateMultiSelectValue(value) {
     const originalValue = this.state.selectedValue || [];
     let newValue = originalValue.slice(0);
@@ -159,10 +165,10 @@ const CalendarMixin = {
       newValue.push(value);
     }
 
-    if (!newValue.length) {
-      newValue = null;
+    if (newValue.length) {
+      this.sortValues(newValue);
     } else {
-      newValue.sort((a, b) => a - b);
+      newValue = null;
     }
 
     this.props.onChange(newValue);
@@ -190,6 +196,12 @@ const CalendarMixin = {
       newValue = newValue.filter((day) => {
         return !removeDaysStrings.includes(day.format('YYYYMMDD'));
       });
+    }
+
+    if (newValue.length) {
+      this.sortValues(newValue);
+    } else {
+      newValue = null;
     }
 
     this.props.onChange(newValue);

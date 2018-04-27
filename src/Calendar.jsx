@@ -228,7 +228,7 @@ const Calendar = createReactClass({
       newValue = this.addOrRemoveMultipleValues({ add: days });
     }
 
-    this.setSelectedValue(newValue.length ? newValue : null);
+    this.setSelectedValue(newValue);
   },
   onWeekMouseEnter({ month, weekday }) {
     const days = this.getWeekdaysOfMonth({ month, weekday });
@@ -256,7 +256,7 @@ const Calendar = createReactClass({
       newValue = this.addOrRemoveMultipleValues({ add: days });
     }
 
-    this.setSelectedValue(newValue.length ? newValue : null);
+    this.setSelectedValue(newValue);
   },
   getWeekdaysOfMonth({ month, weekday }) {
     const firstDayOfMonth = month.clone().startOf('month');
