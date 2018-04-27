@@ -144,14 +144,13 @@ const CalendarMixin = {
 
   sortValues(values) {
     if (values && values.length) {
-      return values.sort((a, b) => a - b);
+      values.sort((a, b) => a - b);
     }
-    return null;
   },
 
   updateMultiSelectValue(value) {
     const originalValue = this.state.selectedValue || [];
-    let newValue = originalValue.slice(0);
+    const newValue = originalValue.slice(0);
     let foundIndex;
 
     originalValue.forEach((singleValue, index) => {
@@ -166,7 +165,7 @@ const CalendarMixin = {
       newValue.push(value);
     }
 
-    newValue = this.sortValues(newValue);
+    this.sortValues(newValue);
     this.props.onChange(newValue);
     return newValue;
   },
@@ -194,7 +193,7 @@ const CalendarMixin = {
       });
     }
 
-    newValue = this.sortValues(newValue);
+    this.sortValues(newValue);
     this.props.onChange(newValue);
     return newValue;
   },
