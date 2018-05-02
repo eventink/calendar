@@ -183,6 +183,10 @@ const Calendar = createReactClass({
     }
   },
 
+  close() {
+    this.props.close();
+  },
+
   onDateInputChange(value) {
     this.onSelect(value, {
       source: 'dateInput',
