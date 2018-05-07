@@ -152,7 +152,6 @@ const Picker = createReactClass({
       onOk: createChainedFunction(calendarProps.onOk, this.onCalendarOk),
       onSelect: createChainedFunction(calendarProps.onSelect, this.onCalendarSelect),
       onClear: createChainedFunction(calendarProps.onClear, this.onCalendarClear),
-      close: this.close,
     };
 
     return React.cloneElement(props.calendar, extraProps);
