@@ -590,7 +590,7 @@ const RangeCalendar = createReactClass({
                   <TodayButton
                     {...props}
                     disabled={isTodayInView}
-                    value={state.value[0]}
+                    displayedValue={state.value[0]}
                     onToday={this.onToday}
                     text={locale.backToToday}
                   />
