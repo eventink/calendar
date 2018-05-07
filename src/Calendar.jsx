@@ -359,12 +359,12 @@ const Calendar = createReactClass({
 
     const disablePreviousMonth = (
       disableMonthsInPast &&
-      value.clone().startOf('month').valueOf() <= moment().startOf('month').valueOf()
+      displayedValue.clone().startOf('month').valueOf() <= moment().startOf('month').valueOf()
     );
 
     const disablePreviousYear = (
       disableMonthsInPast &&
-      value.clone().startOf('year').valueOf() <= moment().startOf('year').valueOf()
+      displayedValue.clone().startOf('year').valueOf() <= moment().startOf('year').valueOf()
     );
 
     const dateInputElement = props.showDateInput ? (
