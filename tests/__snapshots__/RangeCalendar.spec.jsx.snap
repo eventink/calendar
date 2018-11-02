@@ -6670,7 +6670,7 @@ exports[`RangeCalendar key control 1`] = `
                   </td>
                 </tr>
                 <tr
-                  class=""
+                  class="rc-calendar-next-month-row"
                   role="row"
                 >
                   <td
@@ -7430,7 +7430,7 @@ exports[`RangeCalendar render hoverValue correctly 1`] = `
                   </td>
                 </tr>
                 <tr
-                  class=""
+                  class="rc-calendar-next-month-row"
                   role="row"
                 >
                   <td

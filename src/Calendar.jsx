@@ -10,6 +10,7 @@ import CalendarFooter from './calendar/CalendarFooter';
 import CalendarMixin from './mixin/CalendarMixin';
 import CommonMixin from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
+import DateConstants from './date/DateConstants';
 import { getTimeConfig, getTodayTime, syncTime } from './util';
 import { goStartMonth, goEndMonth, goTime } from './util/toTime';
 
@@ -21,9 +22,9 @@ const Calendar = createReactClass({
     prefixCls: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
-    defaultValue: PropTypes.object,
-    value: PropTypes.object,
-    selectedValue: PropTypes.object,
+    defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+    selectedValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
     mode: PropTypes.oneOf(['time', 'date', 'month', 'year', 'decade']),
     locale: PropTypes.object,
     showDateInput: PropTypes.bool,
@@ -50,6 +51,7 @@ const Calendar = createReactClass({
     prevYearIcon: PropTypes.node,
     nextYearIcon: PropTypes.node,
     highlightToday: PropTypes.bool,
+    multiple: PropTypes.bool,
   },
 
   mixins: [CommonMixin, CalendarMixin],
@@ -82,7 +84,7 @@ const Calendar = createReactClass({
     // mac
     const ctrlKey = event.ctrlKey || event.metaKey;
     const { disabledDate } = this.props;
-    const { value } = this.state;
+    const { displayedValue } = this.state;
     switch (keyCode) {
       case KeyCode.DOWN:
         this.goTime(1, 'weeks');
@@ -110,13 +112,13 @@ const Calendar = createReactClass({
         return 1;
       case KeyCode.HOME:
         this.setValue(
-          goStartMonth(this.state.value),
+          goStartMonth(this.state.displayedValue),
         );
         event.preventDefault();
         return 1;
       case KeyCode.END:
         this.setValue(
-          goEndMonth(this.state.value),
+          goEndMonth(this.state.displayedValue),
         );
         event.preventDefault();
         return 1;
@@ -129,8 +131,8 @@ const Calendar = createReactClass({
         event.preventDefault();
         return 1;
       case KeyCode.ENTER:
-        if (!disabledDate || !disabledDate(value)) {
-          this.onSelect(value, {
+        if (!disabledDate || !disabledDate(displayedValue)) {
+          this.onSelect(displayedValue, {
             source: 'keyboard',
           });
         }
@@ -159,7 +161,7 @@ const Calendar = createReactClass({
       source: 'dateInput',
     });
   },
-  onDateTableSelect(value) {
+  onDateTableSelect(value, cause) {
     const { timePicker } = this.props;
     const { selectedValue } = this.state;
     if (!selectedValue && timePicker) {
@@ -168,12 +170,12 @@ const Calendar = createReactClass({
         syncTime(timePickerDefaultValue, value);
       }
     }
-    this.onSelect(value);
+    this.onSelect(value, cause);
   },
   onToday() {
-    const { value } = this.state;
-    const now = getTodayTime(value);
-    this.onSelect(now, {
+    const { displayedValue } = this.state;
+    const now = getTodayTime(displayedValue);
+    this.onDateTableSelect(now, {
       source: 'todayButton',
     });
   },
@@ -183,6 +185,102 @@ const Calendar = createReactClass({
       this.setState({ mode });
     }
     props.onPanelChange(value || state.value, mode);
+  },
+  onWeekDaysSelect({ month, weekday }) {
+    const days = this.getWeekdaysOfMonth({ month, weekday });
+
+    if (!days.length) return;
+
+    const allSelected = this.checkAllSelected(days);
+
+    let newValue = [];
+
+    if (allSelected) {
+      newValue = this.addOrRemoveMultipleValues({ remove: days });
+    } else {
+      newValue = this.addOrRemoveMultipleValues({ add: days });
+    }
+
+    this.setSelectedValue(newValue);
+  },
+  onWeekDaysMouseEnter({ month, weekday }) {
+    const days = this.getWeekdaysOfMonth({ month, weekday });
+
+    this.setState({ hoverValue: days });
+  },
+  onMonthMouseEnter(month) {
+    const days = this.getDaysOfMonth(month);
+
+    this.setState({ hoverValue: days });
+  },
+  onMouseLeave() {
+    this.setState({ hoverValue: null });
+  },
+  onMonthSelect(month) {
+    const days = this.getDaysOfMonth(month);
+
+    const allSelected = this.checkAllSelected(days);
+
+    let newValue = [];
+
+    if (allSelected) {
+      newValue = this.addOrRemoveMultipleValues({ remove: days });
+    } else {
+      newValue = this.addOrRemoveMultipleValues({ add: days });
+    }
+
+    this.setSelectedValue(newValue);
+  },
+  getWeekdaysOfMonth({ month, weekday }) {
+    const firstDayOfMonth = month.clone().startOf('month');
+    const lastDayOfMonth = month.clone().endOf('month');
+    const weekdayOfFirstDayOfMonth = firstDayOfMonth.day();
+    const offset = (
+      DateConstants.DATE_COL_COUNT + weekday - weekdayOfFirstDayOfMonth
+    ) % DateConstants.DATE_COL_COUNT;
+    const current = firstDayOfMonth.clone().add(offset, 'days');
+
+    const selectedDates = [];
+
+    do {
+      if (!this.props.disabledDate(current)) {
+        selectedDates.push(current.clone());
+      }
+    } while (current.add(7, 'days').isBefore(lastDayOfMonth));
+
+    return selectedDates;
+  },
+  getDaysOfMonth(month) {
+    const firstDayOfMonth = month.clone().startOf('month');
+    const lastDayOfMonth = month.clone().endOf('month');
+
+    const selectedDates = [];
+
+    const day = firstDayOfMonth;
+
+    while (day.isBefore(lastDayOfMonth)) {
+      if (!this.props.disabledDate(day)) {
+        selectedDates.push(day.clone());
+      }
+
+      day.add(1, 'day');
+    }
+
+    return selectedDates;
+  },
+  checkAllSelected(days) {
+    const originalValue = this.state.selectedValue || [];
+    const originalDayStrings = originalValue.map((day) => day.format('YYYYMMDD'));
+
+    let allSelected = true;
+    days.forEach((day) => {
+      const dayString = day.format('YYYYMMDD');
+      if (!originalDayStrings.includes(dayString)) {
+        allSelected = false;
+      }
+    });
+
+    return allSelected;
   },
   getRootDOMNode() {
     return ReactDOM.findDOMNode(this);
@@ -196,7 +294,7 @@ const Calendar = createReactClass({
 
   goTime(direction, unit) {
     this.setValue(
-      goTime(this.state.value, direction, unit),
+      goTime(this.state.displayedValue, direction, unit),
     );
   },
 
@@ -211,8 +309,9 @@ const Calendar = createReactClass({
       nextMonthIcon,
       prevYearIcon,
       nextYearIcon,
+      multiple,
     } = props;
-    const { value, selectedValue, mode } = state;
+    const { value, selectedValue, displayedValue, hoverValue, mode } = state;
     const showTimePicker = mode === 'time';
     const disabledTimeConfig = showTimePicker && disabledTime && timePicker ?
       getTimeConfig(selectedValue, disabledTime) : null;
@@ -263,6 +362,7 @@ const Calendar = createReactClass({
         selectedValue={selectedValue}
         onChange={this.onDateInputChange}
         clearIcon={clearIcon}
+        multiple={multiple}
       />
     ) : null;
     const children = [
@@ -274,8 +374,10 @@ const Calendar = createReactClass({
             locale={locale}
             mode={mode}
             value={value}
+            displayedValue={displayedValue}
             onValueChange={this.setValue}
             onPanelChange={this.onPanelChange}
+            setDisplayedValue={this.setDisplayedValue}
             showTimePicker={showTimePicker}
             prefixCls={prefixCls}
             disablePreviousMonth={disablePreviousMonth}
@@ -284,6 +386,10 @@ const Calendar = createReactClass({
             nextMonthIcon={nextMonthIcon}
             prevYearIcon={prevYearIcon}
             nextYearIcon={nextYearIcon}
+            multiple={multiple}
+            onMonthSelect={this.props.selectMonths && this.onMonthSelect}
+            onMonthMouseEnter={this.props.selectMonths && this.onMonthMouseEnter}
+            onMonthMouseLeave={this.props.selectMonths && this.onMouseLeave}
           />
           {timePicker && showTimePicker ?
             (<div className={`${prefixCls}-time-picker`}>
@@ -297,12 +403,18 @@ const Calendar = createReactClass({
               locale={locale}
               value={value}
               selectedValue={selectedValue}
+              displayedValue={displayedValue}
+              hoverValue={hoverValue}
               prefixCls={prefixCls}
               dateRender={props.dateRender}
               onSelect={this.onDateTableSelect}
               disabledDate={disabledDate}
               showWeekNumber={props.showWeekNumber}
               highlightToday={props.highlightToday}
+              multiple={multiple}
+              onWeekDaysSelect={this.props.selectWeekDays && this.onWeekDaysSelect}
+              onWeekDaysMouseEnter={this.props.selectWeekDays && this.onWeekDaysMouseEnter}
+              onWeekDaysMouseLeave={this.props.selectWeekDays && this.onMouseLeave}
             />
           </div>
 
@@ -318,13 +430,15 @@ const Calendar = createReactClass({
             timePicker={timePicker}
             selectedValue={selectedValue}
             value={value}
+            displayedValue={displayedValue}
             disabledDate={disabledDate}
-            okDisabled={!this.isAllowedDate(selectedValue)}
+            okDisabled={!this.isAllowedDate(selectedValue, multiple)}
             onOk={this.onOk}
-            onSelect={this.onSelect}
+            onSelect={this.onDateTableSelect}
             onToday={this.onToday}
             onOpenTimePicker={this.openTimePicker}
             onCloseTimePicker={this.closeTimePicker}
+            multiple={multiple}
           />
         </div>
       </div>),

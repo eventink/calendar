@@ -25994,7 +25994,7 @@ exports[`locales renders tr_TR correctly 1`] = `
               </td>
             </tr>
             <tr
-              class=""
+              class="rc-calendar-next-month-row"
               role="row"
             >
               <td
@@ -26762,7 +26762,7 @@ exports[`locales renders ug_CN correctly 1`] = `
               </td>
             </tr>
             <tr
-              class=""
+              class="rc-calendar-next-month-row"
               role="row"
             >
               <td
