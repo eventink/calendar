@@ -146,13 +146,13 @@ const Calendar = createReactClass({
         return 1;
       case KeyCode.HOME:
         this.setValue(
-          goStartMonth(this.state.value),
+          goStartMonth(this.state.displayedValue),
         );
         event.preventDefault();
         return 1;
       case KeyCode.END:
         this.setValue(
-          goEndMonth(this.state.value),
+          goEndMonth(this.state.displayedValue),
         );
         event.preventDefault();
         return 1;
@@ -328,7 +328,7 @@ const Calendar = createReactClass({
 
   goTime(direction, unit) {
     this.setValue(
-      goTime(this.state.value, direction, unit),
+      goTime(this.state.displayedValue, direction, unit),
     );
   },
 
