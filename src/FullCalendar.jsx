@@ -36,6 +36,7 @@ class FullCalendar extends React.Component {
     defaultValue: PropTypes.object,
     selectedValue: PropTypes.object,
     defaultSelectedValue: PropTypes.object,
+    highlightToday: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -45,13 +46,15 @@ class FullCalendar extends React.Component {
     fullscreen: false,
     showTypeSwitch: true,
     showHeader: true,
+    highlightToday: true,
     onTypeChange() {
     },
   }
 
+  //mixins: [CommonMixin, CalendarMixin],
+
   constructor(props) {
     super(props);
-
     let type;
     if ('type' in props) {
       type = props.type;
@@ -140,8 +143,9 @@ class FullCalendar extends React.Component {
         locale={locale}
         prefixCls={prefixCls}
         onSelect={this.onSelect}
-        value={value}
+        displayedValue={value}
         disabledDate={disabledDate}
+        highlightToday={props.highlightToday}
       />
     ) : (
       <MonthTable

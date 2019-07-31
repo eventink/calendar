@@ -67,9 +67,9 @@ class MonthPanel extends React.Component {
 
   render() {
     const props = this.props;
-    const value = this.state.value;
     const { locale, cellRender, contentRender, renderFooter } = props;
-    const year = value.year();
+    const displayedValue = props.displayedValue;
+    const year = displayedValue.year();
     const prefixCls = this.prefixCls;
 
     const footer = renderFooter && renderFooter('month');
@@ -107,7 +107,7 @@ class MonthPanel extends React.Component {
               disabledDate={props.disabledDate}
               onSelect={this.setAndSelectValue}
               locale={locale}
-              value={value}
+              value={displayedValue}
               cellRender={cellRender}
               contentRender={contentRender}
               prefixCls={prefixCls}

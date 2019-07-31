@@ -109,6 +109,7 @@ class RangeCalendar extends React.Component {
     disabledTime: PropTypes.func,
     clearIcon: PropTypes.node,
     onKeyDown: PropTypes.func,
+    highlightToday: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -123,6 +124,7 @@ class RangeCalendar extends React.Component {
     onInputSelect: noop,
     showToday: true,
     showDateInput: true,
+    highlightToday: true,
   }
 
   constructor(props) {
@@ -774,7 +776,7 @@ class RangeCalendar extends React.Component {
                   <TodayButton
                     {...props}
                     disabled={isTodayInView}
-                    value={state.value[0]}
+                    displayedValue={state.value[0]}
                     onToday={this.onToday}
                     text={locale.backToToday}
                   />

@@ -249,11 +249,47 @@ http://react-component.github.io/calendar/examples/index.html
           <td></td>
           <td>specific the clear icon.</td>
         </tr>
-         <tr>
+        <tr>
           <td>inputMode</td>
           <td>string</td>
           <td>text</td>
           <td>Change the keyboard in mobile device</td>
+        </tr>
+        <tr>
+          <td>disableMonthsInPast</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>whether to disable the year and month arrows on the left that link to dates in the past</td>
+        </tr>
+        <tr>
+          <td>prevMonthIcon</td>
+          <td>React.Node</td>
+          <td></td>
+          <td>to use an own arrow icon</td>
+        </tr>
+        <tr>
+          <td>nextMonthIcon</td>
+          <td>React.Node</td>
+          <td></td>
+          <td>to use an own arrow icon</td>
+        </tr>
+        <tr>
+          <td>prevYearIcon</td>
+          <td>React.Node</td>
+          <td></td>
+          <td>to use an own arrow icon</td>
+        </tr>
+        <tr>
+          <td>nextYearIcon</td>
+          <td>React.Node</td>
+          <td></td>
+          <td>to use an own arrow icon</td>
+        </tr>
+        <tr>
+          <td>highlightToday</td>
+          <td>Boolean</td>
+          <td>true</td>
+          <td>whether to highlight the current day</td>
         </tr>
     </tbody>
 </table>
@@ -444,6 +480,24 @@ http://react-component.github.io/calendar/examples/index.html
           <td>ReactNode</td>
           <td></td>
           <td>specific the clear icon.</td>
+        </tr>
+        <tr>
+          <td>multiple</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>make it possible to select multiple values</td>
+        </tr>
+        <tr>
+          <td>selectWeekDays</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>make it possible to select all days of one weekday, e.g. all sundays</td>
+        </tr>
+        <tr>
+          <td>selectMonths</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>make it possible to select an entire month</td>
         </tr>
     </tbody>
 </table>

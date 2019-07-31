@@ -54,6 +54,7 @@ export default class CalendarPart extends React.Component {
     const newProps = {
       locale,
       value,
+      displayedValue: value,
       prefixCls,
       showTimePicker,
     };
@@ -100,7 +101,7 @@ export default class CalendarPart extends React.Component {
             mode={mode}
             enableNext={enableNext}
             enablePrev={enablePrev}
-            onValueChange={props.onValueChange}
+            setDisplayedValue={props.onValueChange}
             onPanelChange={props.onPanelChange}
             disabledMonth={props.disabledMonth}
           />
@@ -119,6 +120,7 @@ export default class CalendarPart extends React.Component {
               onDayHover={props.onDayHover}
               disabledDate={disabledDate}
               showWeekNumber={props.showWeekNumber}
+              highlightToday={props.highlightToday}
             />
           </div>
         </div>

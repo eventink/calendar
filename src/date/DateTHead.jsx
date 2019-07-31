@@ -5,11 +5,14 @@ import moment from 'moment';
 export default class DateTHead extends React.Component {
   render() {
     const props = this.props;
-    const value = props.value;
-    const localeData = value.localeData();
+    const {
+      displayedValue,
+    } = props;
+    const localeData = displayedValue.localeData();
     const prefixCls = props.prefixCls;
     const veryShortWeekdays = [];
     const weekDays = [];
+    const dateObjects = [];
     const firstDayOfWeek = localeData.firstDayOfWeek();
     let showWeekNumberEl;
     const now = moment();
@@ -18,6 +21,7 @@ export default class DateTHead extends React.Component {
       now.day(index);
       veryShortWeekdays[dateColIndex] = localeData.weekdaysMin(now);
       weekDays[dateColIndex] = localeData.weekdaysShort(now);
+      dateObjects[dateColIndex] = now.clone();
     }
 
     if (props.showWeekNumber) {
@@ -37,9 +41,30 @@ export default class DateTHead extends React.Component {
           title={day}
           className={`${prefixCls}-column-header`}
         >
-          <span className={`${prefixCls}-column-header-inner`}>
-          {veryShortWeekdays[xindex]}
-          </span>
+          {props.onWeekDaysSelect ? (
+            <a
+              className={`${prefixCls}-column-header-inner`}
+              onClick={() => {
+                props.onWeekDaysSelect({
+                  month: displayedValue,
+                  weekday: (firstDayOfWeek + xindex) % DateConstants.DATE_COL_COUNT,
+                });
+              }}
+              onMouseEnter={() => {
+                props.onWeekDaysMouseEnter({
+                  month: displayedValue,
+                  weekday: (firstDayOfWeek + xindex) % DateConstants.DATE_COL_COUNT,
+                });
+              }}
+              onMouseLeave={props.onWeekDaysMouseLeave}
+            >
+              {veryShortWeekdays[xindex]}
+            </a>
+          ) : (
+            <span className={`${prefixCls}-column-header-inner`}>
+              {veryShortWeekdays[xindex]}
+            </span>
+          )}
         </th>);
     });
     return (<thead>

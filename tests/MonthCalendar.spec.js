@@ -56,28 +56,28 @@ describe('MonthCalendar', () => {
       wrapper.simulate('keydown', {
         keyCode: keyCode.DOWN,
       });
-      expect(wrapper.state().value.month()).toBe(7);
+      expect(wrapper.state().displayedValue.month()).toBe(7);
     });
 
     it('UP', () => {
       wrapper.simulate('keydown', {
         keyCode: keyCode.UP,
       });
-      expect(wrapper.state().value.month()).toBe(1);
+      expect(wrapper.state().displayedValue.month()).toBe(1);
     });
 
     it('LEFT', () => {
       wrapper.simulate('keydown', {
         keyCode: keyCode.LEFT,
       });
-      expect(wrapper.state().value.month()).toBe(3);
+      expect(wrapper.state().displayedValue.month()).toBe(3);
     });
 
     it('RIGHT', () => {
       wrapper.simulate('keydown', {
         keyCode: keyCode.RIGHT,
       });
-      expect(wrapper.state().value.month()).toBe(5);
+      expect(wrapper.state().displayedValue.month()).toBe(5);
     });
 
     it('CTRL + LEFT', () => {
@@ -85,8 +85,8 @@ describe('MonthCalendar', () => {
         keyCode: keyCode.LEFT,
         ctrlKey: 1,
       });
-      expect(wrapper.state().value.month()).toBe(4);
-      expect(wrapper.state().value.year()).toBe(2016);
+      expect(wrapper.state().displayedValue.month()).toBe(4);
+      expect(wrapper.state().displayedValue.year()).toBe(2016);
       const selectedYear = wrapper.find('.rc-calendar-month-panel-year-select-content');
       expect(selectedYear.at(0).text()).toBe('2016');
     });
@@ -96,8 +96,8 @@ describe('MonthCalendar', () => {
         keyCode: keyCode.RIGHT,
         ctrlKey: 1,
       });
-      expect(wrapper.state().value.month()).toBe(4);
-      expect(wrapper.state().value.year()).toBe(2018);
+      expect(wrapper.state().displayedValue.month()).toBe(4);
+      expect(wrapper.state().displayedValue.year()).toBe(2018);
       const selectedYear = wrapper.find('.rc-calendar-month-panel-year-select-content');
       expect(selectedYear.at(0).text()).toBe('2018');
     });
@@ -106,8 +106,8 @@ describe('MonthCalendar', () => {
       wrapper.simulate('keydown', {
         keyCode: keyCode.A,
       });
-      expect(wrapper.state().value.month()).toBe(4);
-      expect(wrapper.state().value.year()).toBe(2017);
+      expect(wrapper.state().displayedValue.month()).toBe(4);
+      expect(wrapper.state().displayedValue.year()).toBe(2017);
       const selectedYear = wrapper.find('.rc-calendar-month-panel-year-select-content');
       expect(selectedYear.at(0).text()).toBe('2017');
     });

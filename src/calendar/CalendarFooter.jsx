@@ -13,13 +13,15 @@ export default class CalendarFooter extends React.Component {
     showDateInput: PropTypes.bool,
     disabledTime: PropTypes.any,
     timePicker: PropTypes.element,
-    selectedValue: PropTypes.any,
+    selectedValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
     showOk: PropTypes.bool,
     onSelect: PropTypes.func,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+    displayedValue: PropTypes.object,
     renderFooter: PropTypes.func,
-    defaultValue: PropTypes.object,
     mode: PropTypes.string,
+    defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+    multiple: PropTypes.bool,
   }
 
   onSelect(value) {

@@ -14,7 +14,7 @@ class DateInput extends React.Component {
   static propTypes = {
     prefixCls: PropTypes.string,
     timePicker: PropTypes.object,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
     disabledTime: PropTypes.any,
     format: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     locale: PropTypes.object,
@@ -23,20 +23,20 @@ class DateInput extends React.Component {
     onClear: PropTypes.func,
     placeholder: PropTypes.string,
     onSelect: PropTypes.func,
-    selectedValue: PropTypes.object,
+    selectedValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
     clearIcon: PropTypes.node,
     inputMode: PropTypes.string,
+    multiple: PropTypes.bool,
   }
 
   constructor(props) {
     super(props);
-    const selectedValue = props.selectedValue;
 
     this.state = {
-      str: formatDate(selectedValue, this.props.format),
+      str: this.formatStr(this.props),
       invalid: false,
       hasFocus: false,
-    };
+    }
   }
 
   componentDidUpdate() {
@@ -44,6 +44,26 @@ class DateInput extends React.Component {
       !(cachedSelectionStart === 0 && cachedSelectionEnd === 0)) {
       dateInputInstance.setSelectionRange(cachedSelectionStart, cachedSelectionEnd);
     }
+  }
+
+  formatStr(props) {
+    let str;
+
+    const {
+      selectedValue,
+      multiple,
+      format,
+    } = props;
+
+    if (multiple) {
+      str = selectedValue && selectedValue.length && selectedValue.map((singleValue) => {
+        return formatDate(singleValue, format);
+      }).join(', ') || '';
+    } else {
+      str = formatDate(selectedValue, format);
+    }
+
+    return str;
   }
 
   onClear = () => {
@@ -54,6 +74,8 @@ class DateInput extends React.Component {
   }
 
   onInputChange = (event) => {
+    if (this.props.multiple) return;
+
     const str = event.target.value;
     const { disabledDate, format, onChange, selectedValue } = this.props;
 
@@ -136,10 +158,9 @@ class DateInput extends React.Component {
       cachedSelectionEnd = dateInputInstance.selectionEnd;
     }
     // when popup show, click body will call this, bug!
-    const selectedValue = nextProps.selectedValue;
     if (!state.hasFocus) {
       newState = {
-        str: formatDate(selectedValue, nextProps.format),
+        str: this.formatStr(nextProps),
         invalid: false,
       };
     }

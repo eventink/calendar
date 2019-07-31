@@ -7,21 +7,25 @@ import { isAllowedDate, getTodayTime } from '../util/index';
 function noop() {
 }
 
-export function getNowByCurrentStateValue(value) {
+function getNow() {
+  return moment();
+}
+
+function getNowByCurrentStateValue(displayedValue, multiple) {
   let ret;
-  if (value) {
-    ret = getTodayTime(value);
+  if (displayedValue) {
+    ret = getTodayTime(displayedValue);
   } else {
     ret = moment();
   }
-  return ret;
+  return multiple ? [ret] : ret;
 }
 
 export const calendarMixinPropTypes = {
-  value: PropTypes.object,
-  defaultValue: PropTypes.object,
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+  defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
   onKeyDown: PropTypes.func,
-};
+}
 
 export const calendarMixinDefaultProps = {
   onKeyDown: noop,
@@ -36,26 +40,46 @@ export const calendarMixinWrapper = ComposeComponent => class extends ComposeCom
     if (ComposeComponent.getDerivedStateFromProps) {
       return ComposeComponent.getDerivedStateFromProps(nextProps, prevState);
     }
-
+    
     const { value, selectedValue } = nextProps;
     const newState = {};
 
-    if ('value' in nextProps) {
-      newState.value =
-        value || nextProps.defaultValue || getNowByCurrentStateValue(prevState.value);
+    if (nextProps.multiple) {
+      newState.displayedValue = value[0];
+    } else {
+      newState.displayedValue = value;
     }
+
+    if ('value' in nextProps) {
+      value =
+        value ||
+        nextProps.defaultValue ||
+        getNowByCurrentStateValue(this.state.displayedValue, this.props.multiple);
+    }
+
     if ('selectedValue' in nextProps) {
       newState.selectedValue = selectedValue;
+    } else if ('defaultSelectedValue' in nextProps) {
+      newState.selectedValue = defaultSelectedValue;
     }
 
     return newState;
   }
 
   onSelect = (value, cause) => {
+    let newValue = value;
+
     if (value) {
-      this.setValue(value);
+      if (this.props.multiple) {
+        newValue = this.updateMultiSelectValue(value);
+      } else {
+        this.setValue(value);
+      }
+
+      this.setDisplayedValue(value);
     }
-    this.setSelectedValue(value, cause);
+
+    this.setSelectedValue(newValue, cause);
   }
 
   renderRoot = (newProps) => {
@@ -112,9 +136,92 @@ export const calendarMixinWrapper = ComposeComponent => class extends ComposeCom
     }
   }
 
-  isAllowedDate = (value) => {
+  setDisplayedValue(value) {
+    this.setState({
+      displayedValue: value,
+    });
+  }
+
+  sortValues(values) {
+    if (values && values.length) {
+      values.sort((a, b) => a - b);
+    }
+  }
+
+  updateMultiSelectValue(value) {
+    const originalValue = this.state.selectedValue || [];
+    let newValue = originalValue.slice(0);
+    let foundIndex;
+
+    originalValue.forEach((singleValue, index) => {
+      if (singleValue.isSame(value, 'day')) {
+        foundIndex = index;
+      }
+    });
+
+    if (foundIndex !== undefined) {
+      newValue.splice(foundIndex, 1);
+    } else {
+      newValue.push(value);
+    }
+
+    if (newValue.length) {
+      this.sortValues(newValue);
+    } else {
+      newValue = null;
+    }
+
+    this.props.onChange(newValue);
+    return newValue;
+  }
+
+  addOrRemoveMultipleValues(values) {
+    const originalValue = this.state.selectedValue || [];
+    let newValue = originalValue.slice(0);
+
+    if (values.add) {
+      const originalDayStrings = originalValue.map((day) => day.format('YYYYMMDD'));
+
+      values.add.forEach((day) => {
+        const dayString = day.format('YYYYMMDD');
+        if (!originalDayStrings.includes(dayString)) {
+          newValue.push(day);
+        }
+      });
+    }
+
+    if (values.remove) {
+      const removeDaysStrings = values.remove.map((day) => day.format('YYYYMMDD'));
+
+      newValue = newValue.filter((day) => {
+        return !removeDaysStrings.includes(day.format('YYYYMMDD'));
+      });
+    }
+
+    if (newValue.length) {
+      this.sortValues(newValue);
+    } else {
+      newValue = null;
+    }
+
+    this.props.onChange(newValue);
+    return newValue;
+  }
+
+  isAllowedDate(value, multiple) {
     const disabledDate = this.props.disabledDate;
     const disabledTime = this.props.disabledTime;
+
+    if (multiple && value && value.length) {
+      value.forEach((singleValue) => {
+        if (!isAllowedDate(singleValue, disabledDate, disabledTime)) {
+          return false;
+        }
+      });
+
+      return true;
+    }
+
     return isAllowedDate(value, disabledDate, disabledTime);
   }
 };

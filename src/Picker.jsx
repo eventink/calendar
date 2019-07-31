@@ -57,7 +57,7 @@ class Picker extends React.Component {
     super(props);
 
     let open;
-    if ('open' in props) {
+    if ('open' in props && props.open !== undefined) {
       open = props.open;
     } else {
       open = props.defaultOpen;
@@ -97,10 +97,13 @@ class Picker extends React.Component {
       });
     }
     if (
-      cause.source === 'keyboard' ||
-      cause.source === 'dateInputSelect' ||
-      (!props.calendar.props.timePicker && cause.source !== 'dateInput') ||
-      cause.source === 'todayButton') {
+      !props.multiple && (
+        cause.source === 'keyboard' ||
+        cause.source === 'dateInputSelect' ||
+        (!props.calendar.props.timePicker && cause.source !== 'dateInput') ||
+        cause.source === 'todayButton'
+      )
+    ) {
       this.close(this.focus);
     }
     props.onChange(value);
@@ -164,7 +167,7 @@ class Picker extends React.Component {
   setOpen = (open, callback) => {
     const { onOpenChange } = this.props;
     if (this.state.open !== open) {
-      if (!('open' in this.props)) {
+      if (!('open' in this.props) || this.props.open === undefined) {
         this.setState({
           open,
         }, callback);
