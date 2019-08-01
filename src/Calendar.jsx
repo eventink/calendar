@@ -177,13 +177,13 @@ class Calendar extends React.Component {
         return 1;
       case KeyCode.HOME:
         this.setValue(
-          goStartMonth(this.state.displayedValue),
+          goStartMonth.apply(this),
         );
         event.preventDefault();
         return 1;
       case KeyCode.END:
         this.setValue(
-          goEndMonth(this.state.displayedValue),
+          goEndMonth.apply(this),
         );
         event.preventDefault();
         return 1;
@@ -416,7 +416,7 @@ class Calendar extends React.Component {
 
   goTime = (direction, unit) => {
     this.setValue(
-      goTime(this.state.displayedValue, direction, unit),
+      goTime.apply(this, [direction, unit]),
     );
   }
 
