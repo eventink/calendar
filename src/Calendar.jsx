@@ -36,7 +36,7 @@ function goStartMonth() {
 
 function goEndMonth() {
   const next = this.state.displayedValue.clone();
-  next.startOf('month');
+  next.endOf('month');
   this.setDisplayedValue(next);
 }
 

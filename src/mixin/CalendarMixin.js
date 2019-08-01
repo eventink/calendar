@@ -59,6 +59,10 @@ export const calendarMixinWrapper = ComposeComponent => class extends ComposeCom
       newState.selectedValue = nextProps.defaultSelectedValue;
     }
 
+    if ('value' in nextProps) {
+      newState.value = nextProps.value;
+    }
+
     return newState;
   }
 

@@ -384,14 +384,14 @@ describe('Calendar', () => {
       });
 
       it('END works', () => {
-        const original = calendar.state().value;
+        const original = calendar.state().displayedValue;
         const expected = original.clone().endOf('month');
-        calendar.setState({ value: original.add(2, 'day') });
+        calendar.setState({ displayedValue: original.add(2, 'day') });
 
         calendar.simulate('keyDown', {
           keyCode: keyCode.END,
         });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(calendar.state().displayedValue.date()).toBe(expected.date());
       });
 
       it('enter to select works', () => {
