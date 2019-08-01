@@ -42,6 +42,7 @@ export default class CalendarHeader extends React.Component {
     prevYearIcon: PropTypes.node,
     nextYearIcon: PropTypes.node,
     multiple: PropTypes.bool,
+    setDisplayedValue: PropTypes.func,
   }
 
   static defaultProps = {
@@ -131,7 +132,8 @@ export default class CalendarHeader extends React.Component {
       onClick={showTimePicker ? null : this.showMonthPanel}
       title={showTimePicker ? null : locale.monthSelect}
     >
-      {locale.monthFormat ? displayedValue.format(locale.monthFormat) : localeData.monthsShort(displayedValue)}
+      {locale.monthFormat ?
+        displayedValue.format(locale.monthFormat) : localeData.monthsShort(displayedValue)}
     </a>);
     let day;
     if (showTimePicker) {

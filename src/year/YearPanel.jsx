@@ -11,13 +11,9 @@ function goYear(direction) {
 }
 
 function chooseYear(year) {
-  const value = this.state.displayedValue.clone();
-  value.year(year);
-  value.month(this.state.value.month());
-  this.setState({
-    value,
-  });
-  this.props.onSelect(value);
+  const next = this.props.displayedValue.clone();
+  next.year(year);
+  this.props.onSelect(next);
 }
 
 export default class YearPanel extends React.Component {

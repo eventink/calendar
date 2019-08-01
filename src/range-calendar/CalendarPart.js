@@ -86,6 +86,7 @@ export default class CalendarPart extends React.Component {
         selectedValue={selectedValue[index]}
         onChange={onInputChange}
         onSelect={onInputSelect}
+        onClear={() => {}}
         clearIcon={clearIcon}
         inputMode={inputMode}
       />;

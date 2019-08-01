@@ -20,7 +20,7 @@ class DateInput extends React.Component {
     locale: PropTypes.object,
     disabledDate: PropTypes.func,
     onChange: PropTypes.func,
-    onClear: PropTypes.func,
+    onClear: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     onSelect: PropTypes.func,
     selectedValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
@@ -33,10 +33,10 @@ class DateInput extends React.Component {
     super(props);
 
     this.state = {
-      str: this.formatStr(this.props),
+      str: DateInput.formatStr(this.props),
       invalid: false,
       hasFocus: false,
-    }
+    };
   }
 
   componentDidUpdate() {
@@ -44,26 +44,6 @@ class DateInput extends React.Component {
       !(cachedSelectionStart === 0 && cachedSelectionEnd === 0)) {
       dateInputInstance.setSelectionRange(cachedSelectionStart, cachedSelectionEnd);
     }
-  }
-
-  formatStr(props) {
-    let str;
-
-    const {
-      selectedValue,
-      multiple,
-      format,
-    } = props;
-
-    if (multiple) {
-      str = selectedValue && selectedValue.length && selectedValue.map((singleValue) => {
-        return formatDate(singleValue, format);
-      }).join(', ') || '';
-    } else {
-      str = formatDate(selectedValue, format);
-    }
-
-    return str;
   }
 
   onClear = () => {
@@ -160,7 +140,7 @@ class DateInput extends React.Component {
     // when popup show, click body will call this, bug!
     if (!state.hasFocus) {
       newState = {
-        str: this.formatStr(nextProps),
+        str: DateInput.formatStr(nextProps),
         invalid: false,
       };
     }
@@ -174,6 +154,26 @@ class DateInput extends React.Component {
 
   getRootDOMNode = () => {
     return ReactDOM.findDOMNode(this);
+  }
+
+  static formatStr(props) {
+    let str;
+
+    const {
+      selectedValue,
+      multiple,
+      format,
+    } = props;
+
+    if (multiple) {
+      str = selectedValue && selectedValue.length && selectedValue.map((singleValue) => {
+        return formatDate(singleValue, format);
+      }).join(', ') || '';
+    } else {
+      str = formatDate(selectedValue, format);
+    }
+
+    return str;
   }
 
   focus = () => {

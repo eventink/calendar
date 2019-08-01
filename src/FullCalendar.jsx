@@ -51,8 +51,6 @@ class FullCalendar extends React.Component {
     },
   }
 
-  //mixins: [CommonMixin, CalendarMixin],
-
   constructor(props) {
     super(props);
     let type;

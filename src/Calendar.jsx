@@ -17,8 +17,6 @@ import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
 import DateConstants from './date/DateConstants';
 import { getTimeConfig, getTodayTime, syncTime } from './util';
-import { goStartMonth, goEndMonth, goTime } from './util/toTime';
-import moment from 'moment';
 
 function noop() {
 }
@@ -48,23 +46,6 @@ function goTime(direction, unit) {
   this.setDisplayedValue(next);
 }
 
-function goMonth(direction) {
-  return goTime.call(this, direction, 'months');
-}
-
-function goYear(direction) {
-  return goTime.call(this, direction, 'years');
-}
-
-function goWeek(direction) {
-  return goTime.call(this, direction, 'weeks');
-}
-
-function goDay(direction) {
-  return goTime.call(this, direction, 'days');
-}
-
-
 class Calendar extends React.Component {
   static propTypes = {
     ...calendarMixinPropTypes,
@@ -72,10 +53,22 @@ class Calendar extends React.Component {
     prefixCls: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
-    defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-    value: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-    selectedValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-    defaultSelectedValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+    defaultValue: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.arrayOf(PropTypes.object),
+    ]),
+    value: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.arrayOf(PropTypes.object),
+    ]),
+    selectedValue: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.arrayOf(PropTypes.object),
+    ]),
+    defaultSelectedValue: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.arrayOf(PropTypes.object),
+    ]),
     mode: PropTypes.oneOf(['time', 'date', 'month', 'year', 'decade']),
     locale: PropTypes.object,
     showDateInput: PropTypes.bool,
@@ -106,6 +99,8 @@ class Calendar extends React.Component {
     nextYearIcon: PropTypes.node,
     highlightToday: PropTypes.bool,
     multiple: PropTypes.bool,
+    selectMonths: PropTypes.bool,
+    selectWeekDays: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -238,7 +233,7 @@ class Calendar extends React.Component {
     });
   }
 
-  onDateTableSelect(value, cause) {
+  onDateTableSelect = (value, cause) => {
     const { timePicker } = this.props;
     const { selectedValue } = this.state;
     if (!selectedValue && timePicker) {
@@ -250,7 +245,7 @@ class Calendar extends React.Component {
     this.onSelect(value, cause);
   }
 
-  onToday() {
+  onToday = () => {
     const { displayedValue } = this.state;
     const now = getTodayTime(displayedValue);
     this.onDateTableSelect(now, {
@@ -275,27 +270,7 @@ class Calendar extends React.Component {
     }, 0);
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
-    const { value, selectedValue } = nextProps;
-    let newState = {};
-
-    if ('mode' in nextProps && state.mode !== nextProps.mode) {
-      newState = { mode: nextProps.mode };
-    }
-    if ('value' in nextProps) {
-      newState.value =
-          getMomentObjectIfValid(value) ||
-          getMomentObjectIfValid(nextProps.defaultValue) ||
-          getNowByCurrentStateValue(state.value);
-    }
-    if ('selectedValue' in nextProps) {
-      newState.selectedValue = selectedValue;
-    }
-
-    return newState;
-  }
-
-  onWeekDaysSelect({ month, weekday }) {
+  onWeekDaysSelect = ({ month, weekday }) => {
     const days = this.getWeekdaysOfMonth({ month, weekday });
 
     if (!days.length) return;
@@ -313,23 +288,23 @@ class Calendar extends React.Component {
     this.setSelectedValue(newValue);
   }
 
-  onWeekDaysMouseEnter({ month, weekday }) {
+  onWeekDaysMouseEnter = ({ month, weekday }) => {
     const days = this.getWeekdaysOfMonth({ month, weekday });
 
     this.setState({ hoverValue: days });
   }
 
-  onMonthMouseEnter(month) {
+  onMonthMouseEnter = (month) => {
     const days = this.getDaysOfMonth(month);
 
     this.setState({ hoverValue: days });
   }
 
-  onMouseLeave() {
+  onMouseLeave = () => {
     this.setState({ hoverValue: null });
   }
 
-  onMonthSelect(month) {
+  onMonthSelect = (month) => {
     const days = this.getDaysOfMonth(month);
 
     const allSelected = this.checkAllSelected(days);
@@ -345,7 +320,7 @@ class Calendar extends React.Component {
     this.setSelectedValue(newValue);
   }
 
-  getWeekdaysOfMonth({ month, weekday }) {
+  getWeekdaysOfMonth = ({ month, weekday }) => {
     const firstDayOfMonth = month.clone().startOf('month');
     const lastDayOfMonth = month.clone().endOf('month');
     const weekdayOfFirstDayOfMonth = firstDayOfMonth.day();
@@ -384,6 +359,38 @@ class Calendar extends React.Component {
     return selectedDates;
   }
 
+  static getDerivedStateFromProps(nextProps, state) {
+    const { selectedValue } = nextProps;
+    let newState = {};
+
+    if ('mode' in nextProps && state.mode !== nextProps.mode) {
+      newState = { mode: nextProps.mode };
+    }
+
+    if (!state.displayedValue) {
+      const value =
+            getMomentObjectIfValid(nextProps.value) ||
+            getMomentObjectIfValid(nextProps.defaultValue) ||
+            getNowByCurrentStateValue(state.displayedValue, nextProps.multiple);
+
+      if (nextProps.multiple) {
+        newState.displayedValue = value[0];
+      } else {
+        newState.displayedValue = value;
+      }
+    }
+
+    if ('selectedValue' in nextProps) {
+      newState.selectedValue = selectedValue;
+    }
+
+    return newState;
+  }
+
+  getRootDOMNode() {
+    return ReactDOM.findDOMNode(this);
+  }
+
   checkAllSelected(days) {
     const originalValue = this.state.selectedValue || [];
     const originalDayStrings = originalValue.map((day) => day.format('YYYYMMDD'));
@@ -397,10 +404,6 @@ class Calendar extends React.Component {
     });
 
     return allSelected;
-  }
-
-  getRootDOMNode() {
-    return ReactDOM.findDOMNode(this);
   }
 
   openTimePicker = () => {
@@ -564,7 +567,10 @@ class Calendar extends React.Component {
           displayedValue={displayedValue}
           disabledDate={disabledDate}
           okDisabled={
-            props.showOk !== false && (!selectedValue || !this.isAllowedDate(selectedValue, multiple))
+            props.showOk !== false && (
+              !selectedValue ||
+              !this.isAllowedDate(selectedValue, multiple)
+            )
           }
           onOk={this.onOk}
           onSelect={this.onDateTableSelect}

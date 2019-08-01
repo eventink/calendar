@@ -7,11 +7,7 @@ import { isAllowedDate, getTodayTime } from '../util/index';
 function noop() {
 }
 
-function getNow() {
-  return moment();
-}
-
-function getNowByCurrentStateValue(displayedValue, multiple) {
+export function getNowByCurrentStateValue(displayedValue, multiple) {
   let ret;
   if (displayedValue) {
     ret = getTodayTime(displayedValue);
@@ -25,7 +21,7 @@ export const calendarMixinPropTypes = {
   value: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
   defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
   onKeyDown: PropTypes.func,
-}
+};
 
 export const calendarMixinDefaultProps = {
   onKeyDown: noop,
@@ -40,27 +36,27 @@ export const calendarMixinWrapper = ComposeComponent => class extends ComposeCom
     if (ComposeComponent.getDerivedStateFromProps) {
       return ComposeComponent.getDerivedStateFromProps(nextProps, prevState);
     }
-    
-    const { value, selectedValue } = nextProps;
+
+    const { selectedValue } = nextProps;
     const newState = {};
 
-    if (nextProps.multiple) {
-      newState.displayedValue = value[0];
-    } else {
-      newState.displayedValue = value;
-    }
-
-    if ('value' in nextProps) {
-      value =
-        value ||
+    if (!prevState.displayedValue) {
+      const value =
+        nextProps.value ||
         nextProps.defaultValue ||
-        getNowByCurrentStateValue(this.state.displayedValue, this.props.multiple);
+        getNowByCurrentStateValue(prevState.displayedValue, nextProps.multiple);
+
+      if (nextProps.multiple) {
+        newState.displayedValue = value[0];
+      } else {
+        newState.displayedValue = value;
+      }
     }
 
     if ('selectedValue' in nextProps) {
       newState.selectedValue = selectedValue;
     } else if ('defaultSelectedValue' in nextProps) {
-      newState.selectedValue = defaultSelectedValue;
+      newState.selectedValue = nextProps.defaultSelectedValue;
     }
 
     return newState;
@@ -136,7 +132,7 @@ export const calendarMixinWrapper = ComposeComponent => class extends ComposeCom
     }
   }
 
-  setDisplayedValue(value) {
+  setDisplayedValue = (value) => {
     this.setState({
       displayedValue: value,
     });
