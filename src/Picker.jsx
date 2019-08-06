@@ -158,7 +158,8 @@ class Picker extends React.Component {
       onOk: createChainedFunction(calendarProps.onOk, this.onCalendarOk),
       onSelect: createChainedFunction(calendarProps.onSelect, this.onCalendarSelect),
       onClear: createChainedFunction(calendarProps.onClear, this.onCalendarClear),
-      onBlur: createChainedFunction(calendarProps.onBlur, this.onCalendarBlur),
+      // onBlur breaks our AntDatePicker so we disable it since we dont use it
+      // onBlur: createChainedFunction(calendarProps.onBlur, this.onCalendarBlur),
     };
 
     return React.cloneElement(props.calendar, extraProps);
