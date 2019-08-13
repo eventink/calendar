@@ -34,7 +34,7 @@ export default class CalendarHeader extends React.Component {
     enableNext: PropTypes.any,
     disabledMonth: PropTypes.func,
     renderFooter: PropTypes.func,
-    onMonthSelect: PropTypes.func,
+    onMonthSelect: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
     disablePreviousMonth: PropTypes.bool,
     disablePreviousYear: PropTypes.bool,
     prevMonthIcon: PropTypes.node,
