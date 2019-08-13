@@ -21,7 +21,8 @@ import { getTimeConfig, getTodayTime, syncTime } from './util';
 function noop() {
 }
 
-const getMomentObjectIfValid = date => {
+const getMomentObjectIfValid = (date, multiple) => {
+  date = (multiple && date && date.length > 0) ? date[0] : date;
   if (moment.isMoment(date) && date.isValid()) {
     return date;
   }
@@ -120,8 +121,8 @@ class Calendar extends React.Component {
     this.state = {
       mode: this.props.mode || 'date',
       value:
-          getMomentObjectIfValid(props.value) ||
-          getMomentObjectIfValid(props.defaultValue) ||
+          getMomentObjectIfValid(props.value, props.multiple) ||
+          getMomentObjectIfValid(props.defaultValue, props.multiple) ||
           moment(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
     };
@@ -369,8 +370,8 @@ class Calendar extends React.Component {
 
     if (!state.displayedValue) {
       const value =
-            getMomentObjectIfValid(nextProps.value) ||
-            getMomentObjectIfValid(nextProps.defaultValue) ||
+            getMomentObjectIfValid(nextProps.value, nextProps.multiple) ||
+            getMomentObjectIfValid(nextProps.defaultValue, nextProps.multiple) ||
             getNowByCurrentStateValue(state.displayedValue, nextProps.multiple);
 
       if (nextProps.multiple) {
