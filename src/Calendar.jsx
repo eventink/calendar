@@ -374,11 +374,7 @@ class Calendar extends React.Component {
             getMomentObjectIfValid(nextProps.defaultValue, nextProps.multiple) ||
             getNowByCurrentStateValue(state.displayedValue, nextProps.multiple);
 
-      if (nextProps.multiple) {
-        newState.displayedValue = value[0];
-      } else {
-        newState.displayedValue = value;
-      }
+      newState.displayedValue = value;
     }
 
     if ('selectedValue' in nextProps) {
