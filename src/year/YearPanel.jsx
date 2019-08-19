@@ -16,8 +16,7 @@ function chooseYear(year) {
   this.props.onSelect(next);
 }
 
-export default
-class YearPanel extends React.Component {
+export default class YearPanel extends React.Component {
   constructor(props) {
     super(props);
     this.prefixCls = `${props.rootPrefixCls}-year-panel`;
@@ -52,8 +51,8 @@ class YearPanel extends React.Component {
   }
   render() {
     const props = this.props;
+    const { locale, renderFooter } = props;
     const displayedValue = props.displayedValue;
-    const locale = props.locale;
     const years = this.years();
     const currentYear = displayedValue.year();
     const startYear = parseInt(currentYear / 10, 10) * 10;
@@ -94,6 +93,8 @@ class YearPanel extends React.Component {
       return (<tr key={index} role="row">{tds}</tr>);
     });
 
+    const footer = renderFooter && renderFooter('year');
+
     return (
       <div className={this.prefixCls}>
         <div>
@@ -126,10 +127,15 @@ class YearPanel extends React.Component {
           <div className={`${prefixCls}-body`}>
             <table className={`${prefixCls}-table`} cellSpacing="0" role="grid">
               <tbody className={`${prefixCls}-tbody`}>
-              {yeasEls}
+                {yeasEls}
               </tbody>
             </table>
           </div>
+
+          {footer && (
+            <div className={`${prefixCls}-footer`}>
+              {footer}
+            </div>)}
         </div>
       </div>);
   }
@@ -139,6 +145,7 @@ YearPanel.propTypes = {
   rootPrefixCls: PropTypes.string,
   value: PropTypes.object,
   defaultValue: PropTypes.object,
+  renderFooter: PropTypes.func,
   displayedValue: PropTypes.object,
 };
 

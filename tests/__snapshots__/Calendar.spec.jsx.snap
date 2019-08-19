@@ -20,13 +20,17 @@ exports[`Calendar controlled panels render controlled panels correctly 1`] = `
         />
       </div>
       <a
-        class="rc-calendar-clear-btn"
         role="button"
         title="Clear"
-      />
+      >
+        <span
+          class="rc-calendar-clear-btn"
+        />
+      </a>
     </div>
     <div
       class="rc-calendar-date-panel"
+      tabindex="0"
     >
       <div
         class="rc-calendar-header"
@@ -983,13 +987,17 @@ exports[`Calendar controlled panels render controlled panels correctly 2`] = `
         />
       </div>
       <a
-        class="rc-calendar-clear-btn"
         role="button"
         title="Clear"
-      />
+      >
+        <span
+          class="rc-calendar-clear-btn"
+        />
+      </a>
     </div>
     <div
       class="rc-calendar-date-panel"
+      tabindex="0"
     >
       <div
         class="rc-calendar-header"
@@ -1927,9 +1935,10 @@ exports[`Calendar controlled panels render controlled panels correctly 2`] = `
 `;
 
 exports[`Calendar date ranges selecting all sundays works 1`] = `
-<Calendar
+<CalendarMixinWrapper
   className=""
   disabledDate={[Function]}
+  focusablePanel={true}
   format="YYYY-MM-DD"
   highlightToday={true}
   locale={
@@ -1937,7 +1946,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
       "backToToday": "Back to today",
       "clear": "Clear",
       "dateFormat": "M/D/YYYY",
-      "dateSelect": "Select date",
+      "dateSelect": "select date",
       "dateTimeFormat": "M/D/YYYY HH:mm:ss",
       "dayFormat": "D",
       "decadeSelect": "Choose a decade",
@@ -1954,8 +1963,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
       "previousDecade": "Last decade",
       "previousMonth": "Previous month (PageUp)",
       "previousYear": "Last year (Control + left)",
-      "timeSelect": "Select time",
+      "timeSelect": "select time",
       "today": "Today",
+      "weekSelect": "Choose a week",
       "year": "Year",
       "yearFormat": "YYYY",
       "yearSelect": "Choose a year",
@@ -1994,6 +2004,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
 >
   <div
     className="rc-calendar"
+    onBlur={[Function]}
     onKeyDown={[Function]}
     style={Object {}}
     tabIndex="0"
@@ -2011,7 +2022,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
             "backToToday": "Back to today",
             "clear": "Clear",
             "dateFormat": "M/D/YYYY",
-            "dateSelect": "Select date",
+            "dateSelect": "select date",
             "dateTimeFormat": "M/D/YYYY HH:mm:ss",
             "dayFormat": "D",
             "decadeSelect": "Choose a decade",
@@ -2028,8 +2039,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
             "previousDecade": "Last decade",
             "previousMonth": "Previous month (PageUp)",
             "previousYear": "Last year (Control + left)",
-            "timeSelect": "Select time",
+            "timeSelect": "select time",
             "today": "Today",
+            "weekSelect": "Choose a week",
             "year": "Year",
             "yearFormat": "YYYY",
             "yearSelect": "Choose a year",
@@ -2038,6 +2050,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
         multiple={true}
         onChange={[Function]}
         onClear={[Function]}
+        onSelect={[Function]}
         prefixCls="rc-calendar"
         selectedValue={
           Array [
@@ -2048,11 +2061,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
           ]
         }
         showClear={true}
-        value={
-          Array [
-            "2017-03-28T22:00:00.000Z",
-          ]
-        }
+        value={"2017-03-28T22:00:00.000Z"}
       >
         <div
           className="rc-calendar-input-wrap"
@@ -2062,20 +2071,27 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
           >
             <input
               className="rc-calendar-input "
+              onBlur={[Function]}
               onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
               value="2017-03-05, 2017-03-12, 2017-03-19, 2017-03-26"
             />
           </div>
           <a
-            className="rc-calendar-clear-btn"
             onClick={[Function]}
             role="button"
             title="Clear"
-          />
+          >
+            <span
+              className="rc-calendar-clear-btn"
+            />
+          </a>
         </div>
       </DateInput>
       <div
         className="rc-calendar-date-panel"
+        tabIndex={0}
       >
         <CalendarHeader
           displayedValue={"2017-03-28T22:00:00.000Z"}
@@ -2086,7 +2102,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
               "backToToday": "Back to today",
               "clear": "Clear",
               "dateFormat": "M/D/YYYY",
-              "dateSelect": "Select date",
+              "dateSelect": "select date",
               "dateTimeFormat": "M/D/YYYY HH:mm:ss",
               "dayFormat": "D",
               "decadeSelect": "Choose a decade",
@@ -2103,8 +2119,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
               "previousDecade": "Last decade",
               "previousMonth": "Previous month (PageUp)",
               "previousYear": "Last year (Control + left)",
-              "timeSelect": "Select time",
+              "timeSelect": "select time",
               "today": "Today",
+              "weekSelect": "Choose a week",
               "year": "Year",
               "yearFormat": "YYYY",
               "yearSelect": "Choose a year",
@@ -2115,13 +2132,10 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
           onPanelChange={[Function]}
           onValueChange={[Function]}
           prefixCls="rc-calendar"
+          renderFooter={[Function]}
           setDisplayedValue={[Function]}
           showTimePicker={false}
-          value={
-            Array [
-              "2017-03-28T22:00:00.000Z",
-            ]
-          }
+          value={"2017-03-28T22:00:00.000Z"}
         >
           <div
             className="rc-calendar-header"
@@ -2192,7 +2206,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                 "backToToday": "Back to today",
                 "clear": "Clear",
                 "dateFormat": "M/D/YYYY",
-                "dateSelect": "Select date",
+                "dateSelect": "select date",
                 "dateTimeFormat": "M/D/YYYY HH:mm:ss",
                 "dayFormat": "D",
                 "decadeSelect": "Choose a decade",
@@ -2209,8 +2223,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                 "previousDecade": "Last decade",
                 "previousMonth": "Previous month (PageUp)",
                 "previousYear": "Last year (Control + left)",
-                "timeSelect": "Select time",
+                "timeSelect": "select time",
                 "today": "Today",
+                "weekSelect": "Choose a week",
                 "year": "Year",
                 "yearFormat": "YYYY",
                 "yearSelect": "Choose a year",
@@ -2230,11 +2245,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                 "2017-03-25T23:00:00.000Z",
               ]
             }
-            value={
-              Array [
-                "2017-03-28T22:00:00.000Z",
-              ]
-            }
+            value={"2017-03-28T22:00:00.000Z"}
           >
             <table
               cellSpacing="0"
@@ -2250,7 +2261,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                     "backToToday": "Back to today",
                     "clear": "Clear",
                     "dateFormat": "M/D/YYYY",
-                    "dateSelect": "Select date",
+                    "dateSelect": "select date",
                     "dateTimeFormat": "M/D/YYYY HH:mm:ss",
                     "dayFormat": "D",
                     "decadeSelect": "Choose a decade",
@@ -2267,8 +2278,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                     "previousDecade": "Last decade",
                     "previousMonth": "Previous month (PageUp)",
                     "previousYear": "Last year (Control + left)",
-                    "timeSelect": "Select time",
+                    "timeSelect": "select time",
                     "today": "Today",
+                    "weekSelect": "Choose a week",
                     "year": "Year",
                     "yearFormat": "YYYY",
                     "yearSelect": "Choose a year",
@@ -2288,11 +2300,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                     "2017-03-25T23:00:00.000Z",
                   ]
                 }
-                value={
-                  Array [
-                    "2017-03-28T22:00:00.000Z",
-                  ]
-                }
+                value={"2017-03-28T22:00:00.000Z"}
               >
                 <thead>
                   <tr
@@ -2416,7 +2424,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                     "backToToday": "Back to today",
                     "clear": "Clear",
                     "dateFormat": "M/D/YYYY",
-                    "dateSelect": "Select date",
+                    "dateSelect": "select date",
                     "dateTimeFormat": "M/D/YYYY HH:mm:ss",
                     "dayFormat": "D",
                     "decadeSelect": "Choose a decade",
@@ -2433,8 +2441,9 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                     "previousDecade": "Last decade",
                     "previousMonth": "Previous month (PageUp)",
                     "previousYear": "Last year (Control + left)",
-                    "timeSelect": "Select time",
+                    "timeSelect": "select time",
                     "today": "Today",
+                    "weekSelect": "Choose a week",
                     "year": "Year",
                     "yearFormat": "YYYY",
                     "yearSelect": "Choose a year",
@@ -2454,11 +2463,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                     "2017-03-25T23:00:00.000Z",
                   ]
                 }
-                value={
-                  Array [
-                    "2017-03-28T22:00:00.000Z",
-                  ]
-                }
+                value={"2017-03-28T22:00:00.000Z"}
               >
                 <tbody
                   className="rc-calendar-tbody"
@@ -3184,7 +3189,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
               "backToToday": "Back to today",
               "clear": "Clear",
               "dateFormat": "M/D/YYYY",
-              "dateSelect": "Select date",
+              "dateSelect": "select date",
               "dateTimeFormat": "M/D/YYYY HH:mm:ss",
               "dayFormat": "D",
               "decadeSelect": "Choose a decade",
@@ -3201,13 +3206,15 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
               "previousDecade": "Last decade",
               "previousMonth": "Previous month (PageUp)",
               "previousYear": "Last year (Control + left)",
-              "timeSelect": "Select time",
+              "timeSelect": "select time",
               "today": "Today",
+              "weekSelect": "Choose a week",
               "year": "Year",
               "yearFormat": "YYYY",
               "yearSelect": "Choose a year",
             }
           }
+          mode="date"
           multiple={true}
           okDisabled={false}
           onCloseTimePicker={[Function]}
@@ -3229,11 +3236,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
           showTimePicker={false}
           showToday={true}
           timePicker={null}
-          value={
-            Array [
-              "2017-03-28T22:00:00.000Z",
-            ]
-          }
+          value={"2017-03-28T22:00:00.000Z"}
         >
           <div
             className="rc-calendar-footer"
@@ -3250,7 +3253,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                     "backToToday": "Back to today",
                     "clear": "Clear",
                     "dateFormat": "M/D/YYYY",
-                    "dateSelect": "Select date",
+                    "dateSelect": "select date",
                     "dateTimeFormat": "M/D/YYYY HH:mm:ss",
                     "dayFormat": "D",
                     "decadeSelect": "Choose a decade",
@@ -3267,13 +3270,15 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                     "previousDecade": "Last decade",
                     "previousMonth": "Previous month (PageUp)",
                     "previousYear": "Last year (Control + left)",
-                    "timeSelect": "Select time",
+                    "timeSelect": "select time",
                     "today": "Today",
+                    "weekSelect": "Choose a week",
                     "year": "Year",
                     "yearFormat": "YYYY",
                     "yearSelect": "Choose a year",
                   }
                 }
+                mode="date"
                 multiple={true}
                 okDisabled={false}
                 onCloseTimePicker={[Function]}
@@ -3295,11 +3300,7 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
                 showTimePicker={false}
                 showToday={true}
                 timePicker={null}
-                value={
-                  Array [
-                    "2017-03-28T22:00:00.000Z",
-                  ]
-                }
+                value={"2017-03-28T22:00:00.000Z"}
               >
                 <a
                   className="rc-calendar-today-btn "
@@ -3316,13 +3317,14 @@ exports[`Calendar date ranges selecting all sundays works 1`] = `
       </div>
     </div>
   </div>
-</Calendar>
+</CalendarMixinWrapper>
 `;
 
 exports[`Calendar date ranges selecting the entire month works 1`] = `
-<Calendar
+<CalendarMixinWrapper
   className=""
   disabledDate={[Function]}
+  focusablePanel={true}
   format="YYYY-MM-DD"
   highlightToday={true}
   locale={
@@ -3330,7 +3332,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
       "backToToday": "Back to today",
       "clear": "Clear",
       "dateFormat": "M/D/YYYY",
-      "dateSelect": "Select date",
+      "dateSelect": "select date",
       "dateTimeFormat": "M/D/YYYY HH:mm:ss",
       "dayFormat": "D",
       "decadeSelect": "Choose a decade",
@@ -3347,8 +3349,9 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
       "previousDecade": "Last decade",
       "previousMonth": "Previous month (PageUp)",
       "previousYear": "Last year (Control + left)",
-      "timeSelect": "Select time",
+      "timeSelect": "select time",
       "today": "Today",
+      "weekSelect": "Choose a week",
       "year": "Year",
       "yearFormat": "YYYY",
       "yearSelect": "Choose a year",
@@ -3414,6 +3417,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
 >
   <div
     className="rc-calendar"
+    onBlur={[Function]}
     onKeyDown={[Function]}
     style={Object {}}
     tabIndex="0"
@@ -3431,7 +3435,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
             "backToToday": "Back to today",
             "clear": "Clear",
             "dateFormat": "M/D/YYYY",
-            "dateSelect": "Select date",
+            "dateSelect": "select date",
             "dateTimeFormat": "M/D/YYYY HH:mm:ss",
             "dayFormat": "D",
             "decadeSelect": "Choose a decade",
@@ -3448,8 +3452,9 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
             "previousDecade": "Last decade",
             "previousMonth": "Previous month (PageUp)",
             "previousYear": "Last year (Control + left)",
-            "timeSelect": "Select time",
+            "timeSelect": "select time",
             "today": "Today",
+            "weekSelect": "Choose a week",
             "year": "Year",
             "yearFormat": "YYYY",
             "yearSelect": "Choose a year",
@@ -3458,6 +3463,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
         multiple={true}
         onChange={[Function]}
         onClear={[Function]}
+        onSelect={[Function]}
         prefixCls="rc-calendar"
         selectedValue={
           Array [
@@ -3495,11 +3501,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
           ]
         }
         showClear={true}
-        value={
-          Array [
-            "2017-03-28T22:00:00.000Z",
-          ]
-        }
+        value={"2017-03-28T22:00:00.000Z"}
       >
         <div
           className="rc-calendar-input-wrap"
@@ -3509,20 +3511,27 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
           >
             <input
               className="rc-calendar-input "
+              onBlur={[Function]}
               onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
               value="2017-03-01, 2017-03-02, 2017-03-03, 2017-03-04, 2017-03-05, 2017-03-06, 2017-03-07, 2017-03-08, 2017-03-09, 2017-03-10, 2017-03-11, 2017-03-12, 2017-03-13, 2017-03-14, 2017-03-15, 2017-03-16, 2017-03-17, 2017-03-18, 2017-03-19, 2017-03-20, 2017-03-21, 2017-03-22, 2017-03-23, 2017-03-24, 2017-03-25, 2017-03-26, 2017-03-27, 2017-03-28, 2017-03-29, 2017-03-30, 2017-03-31"
             />
           </div>
           <a
-            className="rc-calendar-clear-btn"
             onClick={[Function]}
             role="button"
             title="Clear"
-          />
+          >
+            <span
+              className="rc-calendar-clear-btn"
+            />
+          </a>
         </div>
       </DateInput>
       <div
         className="rc-calendar-date-panel"
+        tabIndex={0}
       >
         <CalendarHeader
           displayedValue={"2017-03-28T22:00:00.000Z"}
@@ -3533,7 +3542,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
               "backToToday": "Back to today",
               "clear": "Clear",
               "dateFormat": "M/D/YYYY",
-              "dateSelect": "Select date",
+              "dateSelect": "select date",
               "dateTimeFormat": "M/D/YYYY HH:mm:ss",
               "dayFormat": "D",
               "decadeSelect": "Choose a decade",
@@ -3550,8 +3559,9 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
               "previousDecade": "Last decade",
               "previousMonth": "Previous month (PageUp)",
               "previousYear": "Last year (Control + left)",
-              "timeSelect": "Select time",
+              "timeSelect": "select time",
               "today": "Today",
+              "weekSelect": "Choose a week",
               "year": "Year",
               "yearFormat": "YYYY",
               "yearSelect": "Choose a year",
@@ -3565,13 +3575,10 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
           onPanelChange={[Function]}
           onValueChange={[Function]}
           prefixCls="rc-calendar"
+          renderFooter={[Function]}
           setDisplayedValue={[Function]}
           showTimePicker={false}
-          value={
-            Array [
-              "2017-03-28T22:00:00.000Z",
-            ]
-          }
+          value={"2017-03-28T22:00:00.000Z"}
         >
           <div
             className="rc-calendar-header"
@@ -3630,7 +3637,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                 "backToToday": "Back to today",
                 "clear": "Clear",
                 "dateFormat": "M/D/YYYY",
-                "dateSelect": "Select date",
+                "dateSelect": "select date",
                 "dateTimeFormat": "M/D/YYYY HH:mm:ss",
                 "dayFormat": "D",
                 "decadeSelect": "Choose a decade",
@@ -3647,8 +3654,9 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                 "previousDecade": "Last decade",
                 "previousMonth": "Previous month (PageUp)",
                 "previousYear": "Last year (Control + left)",
-                "timeSelect": "Select time",
+                "timeSelect": "select time",
                 "today": "Today",
+                "weekSelect": "Choose a week",
                 "year": "Year",
                 "yearFormat": "YYYY",
                 "yearSelect": "Choose a year",
@@ -3692,11 +3700,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                 "2017-03-30T22:00:00.000Z",
               ]
             }
-            value={
-              Array [
-                "2017-03-28T22:00:00.000Z",
-              ]
-            }
+            value={"2017-03-28T22:00:00.000Z"}
           >
             <table
               cellSpacing="0"
@@ -3712,7 +3716,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                     "backToToday": "Back to today",
                     "clear": "Clear",
                     "dateFormat": "M/D/YYYY",
-                    "dateSelect": "Select date",
+                    "dateSelect": "select date",
                     "dateTimeFormat": "M/D/YYYY HH:mm:ss",
                     "dayFormat": "D",
                     "decadeSelect": "Choose a decade",
@@ -3729,8 +3733,9 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                     "previousDecade": "Last decade",
                     "previousMonth": "Previous month (PageUp)",
                     "previousYear": "Last year (Control + left)",
-                    "timeSelect": "Select time",
+                    "timeSelect": "select time",
                     "today": "Today",
+                    "weekSelect": "Choose a week",
                     "year": "Year",
                     "yearFormat": "YYYY",
                     "yearSelect": "Choose a year",
@@ -3774,11 +3779,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                     "2017-03-30T22:00:00.000Z",
                   ]
                 }
-                value={
-                  Array [
-                    "2017-03-28T22:00:00.000Z",
-                  ]
-                }
+                value={"2017-03-28T22:00:00.000Z"}
               >
                 <thead>
                   <tr
@@ -3881,7 +3882,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                     "backToToday": "Back to today",
                     "clear": "Clear",
                     "dateFormat": "M/D/YYYY",
-                    "dateSelect": "Select date",
+                    "dateSelect": "select date",
                     "dateTimeFormat": "M/D/YYYY HH:mm:ss",
                     "dayFormat": "D",
                     "decadeSelect": "Choose a decade",
@@ -3898,8 +3899,9 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                     "previousDecade": "Last decade",
                     "previousMonth": "Previous month (PageUp)",
                     "previousYear": "Last year (Control + left)",
-                    "timeSelect": "Select time",
+                    "timeSelect": "select time",
                     "today": "Today",
+                    "weekSelect": "Choose a week",
                     "year": "Year",
                     "yearFormat": "YYYY",
                     "yearSelect": "Choose a year",
@@ -3943,11 +3945,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                     "2017-03-30T22:00:00.000Z",
                   ]
                 }
-                value={
-                  Array [
-                    "2017-03-28T22:00:00.000Z",
-                  ]
-                }
+                value={"2017-03-28T22:00:00.000Z"}
               >
                 <tbody
                   className="rc-calendar-tbody"
@@ -4673,7 +4671,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
               "backToToday": "Back to today",
               "clear": "Clear",
               "dateFormat": "M/D/YYYY",
-              "dateSelect": "Select date",
+              "dateSelect": "select date",
               "dateTimeFormat": "M/D/YYYY HH:mm:ss",
               "dayFormat": "D",
               "decadeSelect": "Choose a decade",
@@ -4690,13 +4688,15 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
               "previousDecade": "Last decade",
               "previousMonth": "Previous month (PageUp)",
               "previousYear": "Last year (Control + left)",
-              "timeSelect": "Select time",
+              "timeSelect": "select time",
               "today": "Today",
+              "weekSelect": "Choose a week",
               "year": "Year",
               "yearFormat": "YYYY",
               "yearSelect": "Choose a year",
             }
           }
+          mode="date"
           multiple={true}
           okDisabled={false}
           onCloseTimePicker={[Function]}
@@ -4745,11 +4745,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
           showTimePicker={false}
           showToday={true}
           timePicker={null}
-          value={
-            Array [
-              "2017-03-28T22:00:00.000Z",
-            ]
-          }
+          value={"2017-03-28T22:00:00.000Z"}
         >
           <div
             className="rc-calendar-footer"
@@ -4766,7 +4762,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                     "backToToday": "Back to today",
                     "clear": "Clear",
                     "dateFormat": "M/D/YYYY",
-                    "dateSelect": "Select date",
+                    "dateSelect": "select date",
                     "dateTimeFormat": "M/D/YYYY HH:mm:ss",
                     "dayFormat": "D",
                     "decadeSelect": "Choose a decade",
@@ -4783,13 +4779,15 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                     "previousDecade": "Last decade",
                     "previousMonth": "Previous month (PageUp)",
                     "previousYear": "Last year (Control + left)",
-                    "timeSelect": "Select time",
+                    "timeSelect": "select time",
                     "today": "Today",
+                    "weekSelect": "Choose a week",
                     "year": "Year",
                     "yearFormat": "YYYY",
                     "yearSelect": "Choose a year",
                   }
                 }
+                mode="date"
                 multiple={true}
                 okDisabled={false}
                 onCloseTimePicker={[Function]}
@@ -4838,11 +4836,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
                 showTimePicker={false}
                 showToday={true}
                 timePicker={null}
-                value={
-                  Array [
-                    "2017-03-28T22:00:00.000Z",
-                  ]
-                }
+                value={"2017-03-28T22:00:00.000Z"}
               >
                 <a
                   className="rc-calendar-today-btn "
@@ -4859,7 +4853,7 @@ exports[`Calendar date ranges selecting the entire month works 1`] = `
       </div>
     </div>
   </div>
-</Calendar>
+</CalendarMixinWrapper>
 `;
 
 exports[`Calendar render render correctly 1`] = `
@@ -4882,13 +4876,17 @@ exports[`Calendar render render correctly 1`] = `
         />
       </div>
       <a
-        class="rc-calendar-clear-btn"
         role="button"
         title="清除"
-      />
+      >
+        <span
+          class="rc-calendar-clear-btn"
+        />
+      </a>
     </div>
     <div
       class="rc-calendar-date-panel"
+      tabindex="0"
     >
       <div
         class="rc-calendar-header"
@@ -5647,13 +5645,17 @@ exports[`Calendar render render correctly 2`] = `
         />
       </div>
       <a
-        class="rc-calendar-clear-btn"
         role="button"
         title="Clear"
-      />
+      >
+        <span
+          class="rc-calendar-clear-btn"
+        />
+      </a>
     </div>
     <div
       class="rc-calendar-date-panel"
+      tabindex="0"
     >
       <div
         class="rc-calendar-header"
@@ -6412,13 +6414,17 @@ exports[`Calendar render render correctly 3`] = `
         />
       </div>
       <a
-        class="rc-calendar-clear-btn"
         role="button"
         title="Clear"
-      />
+      >
+        <span
+          class="rc-calendar-clear-btn"
+        />
+      </a>
     </div>
     <div
       class="rc-calendar-date-panel"
+      tabindex="0"
     >
       <div
         class="rc-calendar-header"
@@ -7157,6 +7163,775 @@ exports[`Calendar render render correctly 3`] = `
 </div>
 `;
 
+exports[`Calendar render render correctly with invalid moment object 1`] = `
+<div
+  class="rc-calendar"
+  tabindex="0"
+>
+  <div
+    class="rc-calendar-panel"
+  >
+    <div
+      class="rc-calendar-input-wrap"
+    >
+      <div
+        class="rc-calendar-date-input-wrap"
+      >
+        <input
+          class="rc-calendar-input "
+          value=""
+        />
+      </div>
+      <a
+        role="button"
+        title="Clear"
+      >
+        <span
+          class="rc-calendar-clear-btn"
+        />
+      </a>
+    </div>
+    <div
+      class="rc-calendar-date-panel"
+      tabindex="0"
+    >
+      <div
+        class="rc-calendar-header"
+      >
+        <div
+          style="position:relative"
+        >
+          <a
+            class="rc-calendar-prev-year-btn"
+            role="button"
+            title="Last year (Control + left)"
+          />
+          <a
+            class="rc-calendar-prev-month-btn"
+            role="button"
+            title="Previous month (PageUp)"
+          />
+          <span
+            class="rc-calendar-my-select"
+          >
+            <a
+              class="rc-calendar-month-select"
+              role="button"
+              title="Choose a month"
+            >
+              Mar
+            </a>
+            <a
+              class="rc-calendar-year-select"
+              role="button"
+              title="Choose a year"
+            >
+              2017
+            </a>
+          </span>
+          <a
+            class="rc-calendar-next-month-btn"
+            title="Next month (PageDown)"
+          />
+          <a
+            class="rc-calendar-next-year-btn"
+            title="Next year (Control + right)"
+          />
+        </div>
+      </div>
+      <div
+        class="rc-calendar-body"
+      >
+        <table
+          cellspacing="0"
+          class="rc-calendar-table"
+          role="grid"
+        >
+          <thead>
+            <tr
+              role="row"
+            >
+              <th
+                class="rc-calendar-column-header"
+                role="columnheader"
+                title="Sun"
+              >
+                <span
+                  class="rc-calendar-column-header-inner"
+                >
+                  Su
+                </span>
+              </th>
+              <th
+                class="rc-calendar-column-header"
+                role="columnheader"
+                title="Mon"
+              >
+                <span
+                  class="rc-calendar-column-header-inner"
+                >
+                  Mo
+                </span>
+              </th>
+              <th
+                class="rc-calendar-column-header"
+                role="columnheader"
+                title="Tue"
+              >
+                <span
+                  class="rc-calendar-column-header-inner"
+                >
+                  Tu
+                </span>
+              </th>
+              <th
+                class="rc-calendar-column-header"
+                role="columnheader"
+                title="Wed"
+              >
+                <span
+                  class="rc-calendar-column-header-inner"
+                >
+                  We
+                </span>
+              </th>
+              <th
+                class="rc-calendar-column-header"
+                role="columnheader"
+                title="Thu"
+              >
+                <span
+                  class="rc-calendar-column-header-inner"
+                >
+                  Th
+                </span>
+              </th>
+              <th
+                class="rc-calendar-column-header"
+                role="columnheader"
+                title="Fri"
+              >
+                <span
+                  class="rc-calendar-column-header-inner"
+                >
+                  Fr
+                </span>
+              </th>
+              <th
+                class="rc-calendar-column-header"
+                role="columnheader"
+                title="Sat"
+              >
+                <span
+                  class="rc-calendar-column-header-inner"
+                >
+                  Sa
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="rc-calendar-tbody"
+          >
+            <tr
+              class=""
+              role="row"
+            >
+              <td
+                class="rc-calendar-cell rc-calendar-last-month-cell"
+                role="gridcell"
+                title="February 26, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  26
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-last-month-cell"
+                role="gridcell"
+                title="February 27, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  27
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-last-month-cell rc-calendar-last-day-of-month"
+                role="gridcell"
+                title="February 28, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  28
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 1, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  1
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 2, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  2
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 3, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  3
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 4, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  4
+                </div>
+              </td>
+            </tr>
+            <tr
+              class=""
+              role="row"
+            >
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 5, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  5
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 6, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  6
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 7, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  7
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 8, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  8
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 9, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  9
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 10, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  10
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 11, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  11
+                </div>
+              </td>
+            </tr>
+            <tr
+              class=""
+              role="row"
+            >
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 12, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  12
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 13, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  13
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 14, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  14
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 15, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  15
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 16, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  16
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 17, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  17
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 18, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  18
+                </div>
+              </td>
+            </tr>
+            <tr
+              class=""
+              role="row"
+            >
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 19, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  19
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 20, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  20
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 21, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  21
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 22, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  22
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 23, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  23
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 24, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  24
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 25, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  25
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="rc-calendar-current-week rc-calendar-active-week"
+              role="row"
+            >
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 26, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  26
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 27, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  27
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 28, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  28
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-today rc-calendar-selected-day"
+                role="gridcell"
+                title="March 29, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="true"
+                  class="rc-calendar-date"
+                >
+                  29
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell"
+                role="gridcell"
+                title="March 30, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  30
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-last-day-of-month"
+                role="gridcell"
+                title="March 31, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  31
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-next-month-btn-day"
+                role="gridcell"
+                title="April 1, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  1
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="rc-calendar-next-month-row"
+              role="row"
+            >
+              <td
+                class="rc-calendar-cell rc-calendar-next-month-btn-day"
+                role="gridcell"
+                title="April 2, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  2
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-next-month-btn-day"
+                role="gridcell"
+                title="April 3, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  3
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-next-month-btn-day"
+                role="gridcell"
+                title="April 4, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  4
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-next-month-btn-day"
+                role="gridcell"
+                title="April 5, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  5
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-next-month-btn-day"
+                role="gridcell"
+                title="April 6, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  6
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-next-month-btn-day"
+                role="gridcell"
+                title="April 7, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  7
+                </div>
+              </td>
+              <td
+                class="rc-calendar-cell rc-calendar-next-month-btn-day"
+                role="gridcell"
+                title="April 8, 2017"
+              >
+                <div
+                  aria-disabled="false"
+                  aria-selected="false"
+                  class="rc-calendar-date"
+                >
+                  8
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="rc-calendar-footer"
+      >
+        <span
+          class="rc-calendar-footer-btn"
+        >
+          <a
+            class="rc-calendar-today-btn "
+            role="button"
+            title="March 29, 2017"
+          >
+            Today
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Calendar render render correctly with multiple selected dates for defaultSelectedValue 1`] = `
 <div
   class="rc-calendar"
@@ -7177,13 +7952,17 @@ exports[`Calendar render render correctly with multiple selected dates for defau
         />
       </div>
       <a
-        class="rc-calendar-clear-btn"
         role="button"
         title="Clear"
-      />
+      >
+        <span
+          class="rc-calendar-clear-btn"
+        />
+      </a>
     </div>
     <div
       class="rc-calendar-date-panel"
+      tabindex="0"
     >
       <div
         class="rc-calendar-header"
@@ -7942,13 +8721,17 @@ exports[`Calendar render render correctly with multiple selected dates for selec
         />
       </div>
       <a
-        class="rc-calendar-clear-btn"
         role="button"
         title="Clear"
-      />
+      >
+        <span
+          class="rc-calendar-clear-btn"
+        />
+      </a>
     </div>
     <div
       class="rc-calendar-date-panel"
+      tabindex="0"
     >
       <div
         class="rc-calendar-header"

@@ -7,72 +7,68 @@ import { isAllowedDate, getTodayTime } from '../util/index';
 function noop() {
 }
 
-function getNow() {
-  return moment();
-}
-
-function getNowByCurrentStateValue(displayedValue, multiple) {
+export function getNowByCurrentStateValue(displayedValue, multiple) {
   let ret;
   if (displayedValue) {
     ret = getTodayTime(displayedValue);
   } else {
-    ret = getNow();
+    ret = moment();
   }
   return multiple ? [ret] : ret;
 }
 
-const CalendarMixin = {
-  propTypes: {
-    value: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-    defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-    onKeyDown: PropTypes.func,
-  },
+export const calendarMixinPropTypes = {
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+  defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+  onKeyDown: PropTypes.func,
+};
 
-  getDefaultProps() {
-    return {
-      onKeyDown: noop,
-    };
-  },
+export const calendarMixinDefaultProps = {
+  onKeyDown: noop,
+};
 
-  getInitialState() {
-    const props = this.props;
-    const value = props.value || props.defaultValue || (props.multiple ? [getNow()] : getNow());
-    let displayedValue;
+export const calendarMixinWrapper = ComposeComponent => class extends ComposeComponent {
+  static displayName = 'CalendarMixinWrapper';
+  static defaultProps = ComposeComponent.defaultProps;
 
-    if (props.multiple) {
-      displayedValue = value[0];
-    } else {
-      displayedValue = value;
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // Use origin function if provided
+    if (ComposeComponent.getDerivedStateFromProps) {
+      return ComposeComponent.getDerivedStateFromProps(nextProps, prevState);
     }
 
-    return {
-      value,
-      selectedValue: props.selectedValue || props.defaultSelectedValue,
-      displayedValue,
-    };
-  },
-
-  componentWillReceiveProps(nextProps) {
-    let { value } = nextProps;
     const { selectedValue } = nextProps;
-    if ('value' in nextProps) {
-      value =
-        value ||
-        nextProps.defaultValue ||
-        getNowByCurrentStateValue(this.state.displayedValue, this.props.multiple);
-      this.setState({
-        value,
-      });
-    }
-    if ('selectedValue' in nextProps) {
-      this.setState({
-        selectedValue,
-      });
-    }
-  },
+    const newState = {};
 
-  onSelect(value, cause) {
+    if (!prevState.displayedValue) {
+      const value =
+        nextProps.value ||
+        nextProps.defaultValue ||
+        getNowByCurrentStateValue(prevState.displayedValue, nextProps.multiple);
+
+      if (nextProps.multiple) {
+        newState.displayedValue = value[0];
+      } else {
+        newState.displayedValue = value;
+      }
+    }
+
+    if ('selectedValue' in nextProps) {
+      newState.selectedValue = selectedValue;
+    } else if ('defaultSelectedValue' in nextProps) {
+      newState.selectedValue = nextProps.defaultSelectedValue;
+    }
+
+    if ('value' in nextProps) {
+      newState.value = nextProps.value;
+    }
+
+    return newState;
+  }
+
+  onSelect = (value, cause) => {
     let newValue = value;
+
     if (value) {
       if (this.props.multiple) {
         newValue = this.updateMultiSelectValue(value);
@@ -82,10 +78,11 @@ const CalendarMixin = {
 
       this.setDisplayedValue(value);
     }
-    this.setSelectedValue(newValue, cause);
-  },
 
-  renderRoot(newProps) {
+    this.setSelectedValue(newValue, cause);
+  }
+
+  renderRoot = (newProps) => {
     const props = this.props;
     const prefixCls = props.prefixCls;
 
@@ -103,24 +100,27 @@ const CalendarMixin = {
         style={this.props.style}
         tabIndex="0"
         onKeyDown={this.onKeyDown}
+        onBlur={this.onBlur}
       >
         {newProps.children}
       </div>
     );
-  },
+  }
 
-  setSelectedValue(selectedValue, cause) {
+  setSelectedValue = (selectedValue, cause) => {
     // if (this.isAllowedDate(selectedValue)) {
     if (!('selectedValue' in this.props)) {
       this.setState({
         selectedValue,
       });
     }
-    this.props.onSelect(selectedValue, cause);
+    if (this.props.onSelect) {
+      this.props.onSelect(selectedValue, cause);
+    }
     // }
-  },
+  }
 
-  setValue(value) {
+  setValue = (value) => {
     const originalValue = this.state.value;
     if (!('value' in this.props)) {
       this.setState({
@@ -129,24 +129,24 @@ const CalendarMixin = {
     }
     if (
       originalValue && value && !originalValue.isSame(value) ||
-        (!originalValue && value) ||
-        (originalValue && !value)
+      (!originalValue && value) ||
+      (originalValue && !value)
     ) {
       this.props.onChange(value);
     }
-  },
+  }
 
-  setDisplayedValue(value) {
+  setDisplayedValue = (value) => {
     this.setState({
       displayedValue: value,
     });
-  },
+  }
 
   sortValues(values) {
     if (values && values.length) {
       values.sort((a, b) => a - b);
     }
-  },
+  }
 
   updateMultiSelectValue(value) {
     const originalValue = this.state.selectedValue || [];
@@ -173,7 +173,7 @@ const CalendarMixin = {
 
     this.props.onChange(newValue);
     return newValue;
-  },
+  }
 
   addOrRemoveMultipleValues(values) {
     const originalValue = this.state.selectedValue || [];
@@ -206,7 +206,7 @@ const CalendarMixin = {
 
     this.props.onChange(newValue);
     return newValue;
-  },
+  }
 
   isAllowedDate(value, multiple) {
     const disabledDate = this.props.disabledDate;
@@ -223,7 +223,5 @@ const CalendarMixin = {
     }
 
     return isAllowedDate(value, disabledDate, disabledTime);
-  },
+  }
 };
-
-export default CalendarMixin;
